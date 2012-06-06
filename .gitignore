@@ -1,0 +1,26 @@
+## PROJECT::GENERAL
+*.rbc
+.config
+.yardoc
+.rspec
+InstalledFiles
+_yardoc
+coverage
+coverage
+doc/
+lib/bundler/man
+pkg
+pkg/*
+rdoc
+rdoc
+spec/reports
+tmp
+
+## BUNDLER
+*.gem
+.bundle
+.rbenv*
+.rvmrc
+Gemfile.lock
+doc
+log
