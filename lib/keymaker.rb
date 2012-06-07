@@ -24,7 +24,7 @@ require 'keymaker/node'
 
 module Keymaker
 
-  VERSION = "0.0.1"
+  VERSION = "0.0.2"
 
   def self.service
     @service ||= Keymaker::Service.new(Keymaker::Configuration.new)

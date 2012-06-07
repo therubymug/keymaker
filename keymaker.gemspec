@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
   s.name              = 'keymaker'
-  s.version           = '0.0.1'
-  s.date              = '2012-06-06'
+  s.version           = '0.0.2'
+  s.date              = '2012-06-07'
 
   ## Make sure your summary is short. The description may be as long
   ## as you like.
@@ -82,7 +82,9 @@ Gem::Specification.new do |s|
     lib/keymaker/serialization.rb
     lib/keymaker/service.rb
     lib/keymaker/update_node_properties_request.rb
-    spec/lib/keymaker_integration_spec.rb
+    spec/keymaker/configuration_spec.rb
+    spec/keymaker/service_spec.rb
+    spec/keymaker_spec.rb
     spec/spec_helper.rb
     spec/support/keymaker.rb
   ]
