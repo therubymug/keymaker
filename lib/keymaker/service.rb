@@ -15,7 +15,7 @@ module Keymaker
     end
 
     def connection
-      @connection ||= Faraday.new(url: config.service_root) do |conn|
+      @connection ||= Faraday.new(url: config.connection_service_root_url) do |conn|
         conn.request :json
         conn.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
         conn.adapter :net_http

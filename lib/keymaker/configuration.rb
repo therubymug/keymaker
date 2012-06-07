@@ -33,6 +33,15 @@ module Keymaker
         url_opts[:scheme] = protocol
         url_opts[:host] = server
         url_opts[:port] = port
+      end
+    end
+
+    def connection_service_root_url
+      Addressable::URI.new(connection_url_opts)
+    end
+
+    def connection_url_opts
+      url_opts.tap do |url_opts|
         url_opts[:user] = username if username
         url_opts[:password] = password if password
       end
