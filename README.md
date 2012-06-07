@@ -78,6 +78,7 @@ Coming soon
 - Avdi Grimm
 - Micah Cooper
 - Stephen Caudill
+- Travis Anderson
 
 ## Copyright
 Copyright (c) 2012 [Rogelio J. Samour](mailto:rogelio@therubymug.com)
