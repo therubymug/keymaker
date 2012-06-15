@@ -1,4 +1,3 @@
-
 #############################################################################
 #
 # Helper functions
@@ -120,4 +119,79 @@ task :validate do
     puts "A `VERSION` file at root level violates Gem best practices."
     exit!
   end
+end
+
+#############################################################################
+#
+# Neo4j tasks
+#
+#############################################################################
+
+KEYMAKER_ROOT = File.expand_path(File.dirname(__FILE__) + '/../..')
+KEYMAKER_TMP_DIR = File.expand_path(File.join(KEYMAKER_ROOT, "tmp"))
+NEO4J_INSTALL_DIR = ENV['NEO4J_INSTALL_DIR'] || File.expand_path(File.join(KEYMAKER_TMP_DIR, "keymaker_development"))
+NEO4J_PORT = ENV['NEO4J_PORT'] || '7477' # Don't clobber standard neo4j ports 7474 or 7475 for development
+
+namespace :neo4j do
+
+  desc "Install neo4j on localhost:#{NEO4J_PORT}. e.g. rake neo4j:install[community,1.7.M03]"
+  task :install, :edition, :version do |t, args|
+    args.with_defaults(:edition => "community", :version => "1.7")
+
+    source_name = "neo4j-#{args[:edition]}-#{args[:version]}"
+    tarball = "#{source_name}-unix.tar.gz"
+
+    puts "Installing #{source_name} to localhost:#{NEO4J_PORT}..."
+
+    ssl_url_true = "org.neo4j.server.webserver.https.enabled=true"
+    ssl_url_false = ssl_url_true.gsub("true","false")
+
+    %x[mkdir -p #{KEYMAKER_TMP_DIR}; cd #{KEYMAKER_TMP_DIR}]
+    FileUtils.rm_rf(NEO4J_INSTALL_DIR) if Dir.exists?(NEO4J_INSTALL_DIR) && File.owned?(NEO4J_INSTALL_DIR)
+    %x[wget http://dist.neo4j.org/#{tarball}]
+    %x[tar xvzf #{tarball}]
+
+    %x[mv #{source_name} #{NEO4J_INSTALL_DIR}]
+    %x[rm #{tarball}]
+
+    %x[sed -i.bak 's/7474/#{NEO4J_PORT}/g' #{NEO4J_INSTALL_DIR}/conf/neo4j-server.properties]
+    %x[sed -i.bak 's/#{ssl_url_true}/#{ssl_url_false}/g' #{NEO4J_INSTALL_DIR}/conf/neo4j-server.properties]
+
+    puts "#{source_name} Installed into the #{NEO4J_INSTALL_DIR} directory."
+    puts "Run `rake neo4j:start` to start it"
+  end
+
+  desc "Start the neo4j server running on localhost:#{NEO4J_PORT}"
+  task :start do
+    puts "Starting neo4j for keymaker_development..."
+    %x[#{NEO4J_INSTALL_DIR}/bin/neo4j start]
+  end
+
+  desc "Stop the neo4j server running on localhost:#{NEO4J_PORT}"
+  task :stop do
+    puts "Stopping neo4j for keymaker_development..."
+    %x[#{NEO4J_INSTALL_DIR}/bin/neo4j stop]
+  end
+
+  desc "Restart the neo4j server running on localhost:#{NEO4J_PORT}"
+  task :restart do
+    puts "Restarting neo4j for keymaker_development..."
+    %x[#{NEO4J_INSTALL_DIR}/bin/neo4j restart]
+  end
+
+  desc "Wipe out and recreate the neo4j server running on localhost:#{NEO4J_PORT}"
+  task :reset do
+    puts "Resetting neo4j for keymaker_development..."
+    # Stop the server
+    %x[#{NEO4J_INSTALL_DIR}/bin/neo4j stop]
+    # Reset the database
+    FileUtils.rm_rf("#{NEO4J_INSTALL_DIR}/data/graph.db")
+    FileUtils.mkdir("#{NEO4J_INSTALL_DIR}/data/graph.db")
+    # Remove log files
+    FileUtils.rm_rf("#{NEO4J_INSTALL_DIR}/data/log")
+    FileUtils.mkdir("#{NEO4J_INSTALL_DIR}/data/log")
+    # Start the server
+    %x[#{NEO4J_INSTALL_DIR}/bin/neo4j start]
+  end
+
 end

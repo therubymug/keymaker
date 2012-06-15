@@ -22,9 +22,11 @@ require 'keymaker/indexing'
 require 'keymaker/serialization'
 require 'keymaker/node'
 
+require 'keymaker/railtie' if defined? Rails::Railtie
+
 module Keymaker
 
-  VERSION = "0.0.2"
+  VERSION = "0.0.6"
 
   def self.service
     @service ||= Keymaker::Service.new(Keymaker::Configuration.new)

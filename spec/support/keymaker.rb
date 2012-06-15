@@ -2,12 +2,12 @@ require 'keymaker'
 
 Keymaker.configure do |c|
   c.server = "localhost"
-  c.port = 7475
+  c.port = 7477
 end
 
 shared_context "Keymaker connections" do
   let(:connection) do
-    Faraday.new({url: "http://localhost:7475"}) do |conn|
+    Faraday.new({url: "http://localhost:7477"}) do |conn|
       conn.request :json
       conn.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
       conn.adapter :net_http
@@ -81,11 +81,11 @@ def clear_graph
 end
 
 def clear_users_index
-  raw_connection.delete("http://localhost:7475/db/data/index/node/users")
+  raw_connection.delete("http://localhost:7477/db/data/index/node/users")
 end
 
 def raw_connection
-  Faraday.new({url: "http://localhost:7475"}) do |conn|
+  Faraday.new({url: "http://localhost:7477"}) do |conn|
     conn.request :json
     conn.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
     conn.adapter :net_http

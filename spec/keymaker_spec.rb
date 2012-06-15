@@ -11,7 +11,7 @@ describe Keymaker do
 
     context "given a bad port number" do
 
-      let(:url) { john_node_url.dup.gsub("7475", "49152") }
+      let(:url) { john_node_url.dup.gsub("7477", "49152") }
 
       after { service.connection = connection }
 
