@@ -127,7 +127,7 @@ end
 #
 #############################################################################
 
-KEYMAKER_ROOT = File.expand_path(File.dirname(__FILE__) + '/../..')
+KEYMAKER_ROOT = File.expand_path(File.dirname(__FILE__))
 KEYMAKER_TMP_DIR = File.expand_path(File.join(KEYMAKER_ROOT, "tmp"))
 NEO4J_INSTALL_DIR = ENV['NEO4J_INSTALL_DIR'] || File.expand_path(File.join(KEYMAKER_TMP_DIR, "keymaker_development"))
 NEO4J_PORT = ENV['NEO4J_PORT'] || '7477' # Don't clobber standard neo4j ports 7474 or 7475 for development
