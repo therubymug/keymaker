@@ -3,7 +3,6 @@ module Keymaker
 
     extend Forwardable
 
-
     def_delegator :config, :batch_node_path
     def_delegator :config, :batch_path
     def_delegator :config, :full_cypher_path

@@ -1,8 +1,6 @@
 # Keymaker
 
-## NOTICE OF WORK IN PROGRESS
-
-A multi-layer REST API Ruby wrapper for the neo4j graph database.
+A multi-layer REST API Ruby wrapper for the Neo4j graph database built on top of [Faraday][].
 
 ```
 Oracle: Our time is up. Listen to me, Neo.
@@ -13,23 +11,33 @@ Neo:    The Keymaker?
 
 ## Installation
 
+Install and start the Neo4j server:
+
+```ruby
+rake neo4j:install
+rake neo4j:start
+# optionally for testing
+rake neo4j:install RAILS_ENV=test
+rake neo4j:start RAILS_ENV=test
+```
+
 Add this line to your application's Gemfile:
 
-    gem 'keymaker'
+```ruby
+gem 'keymaker'
+```
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install keymaker
+```
+$ bundle
+```
 
 ## Usage
 
 ### Configuration
 
-First, create a `config/neo4j.yml` file:
+Create a `config/neo4j.yml` file:
 
 ```ruby
 development:
@@ -58,6 +66,31 @@ else
     c.password = ENV['NEO4J_PASSWORD']
   end
 end
+```
+
+### Low-level REST API Calls
+
+```ruby
+
+Keymaker.configure do |c|
+  c.server = "localhost"
+  c.port = 7474
+end
+
+## Create a node ##
+
+response = Keymaker.service.create_node_request({:name => 'John Connor', :catch_phrase => 'No problemo'})
+
+## Update node properties ##
+
+## Delete a node ##
+
+## Create a relationship ##
+
+## Update relationship properties ##
+
+## Delete a relationship ##
+
 ```
 
 ### Nodes
@@ -111,3 +144,4 @@ Copyright (c) 2012 [Rogelio J. Samour](mailto:rogelio@therubymug.com)
 See [LICENSE][] for details.
 
 [license]: https://github.com/therubymug/keymaker/blob/master/LICENSE.md
+[faraday]: https://github.com/technoweenie/faraday
