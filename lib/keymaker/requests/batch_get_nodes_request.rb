@@ -1,15 +1,20 @@
 module Keymaker
 
-  class BatchGetNodesRequest < Request
+  class BatchGetNodesRequest < BatchRequest
 
-    def submit
-      service.post(batch_path, batch_get_nodes_properties)
+    attr_accessor :node_ids
+
+    def initialize(service, node_ids)
+      self.config = service.config
+      self.node_ids = node_ids
+      self.service = service
+      self.opts = build_job_descriptions_collection
     end
 
-    def batch_get_nodes_properties
-      [].tap do |batch_request|
-        opts.each_with_index do |node_id, request_id|
-          batch_request << {id: request_id, to: node_uri(node_id), method: "GET"}
+    def build_job_descriptions_collection
+      [].tap do |batch_jobs|
+        node_ids.each_with_index do |node_id, job_id|
+          batch_jobs << {id: job_id, to: node_uri(node_id), method: "GET"}
         end
       end
     end

@@ -30,7 +30,14 @@ module Keymaker
     end
 
     def success?
-      (200..207).include?(status)
+      (200..299).include?(status)
+    end
+
+    def on_error
+      unless success?
+        yield self
+      end
+      self
     end
 
   end

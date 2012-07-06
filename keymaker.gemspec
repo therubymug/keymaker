@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'keymaker'
   s.version           = '0.0.7'
-  s.date              = '2012-06-15'
+  s.date              = '2012-07-10'
 
   ## Make sure your summary is short. The description may be as long
   ## as you like.
@@ -67,30 +67,45 @@ Gem::Specification.new do |s|
     Rakefile
     keymaker.gemspec
     lib/keymaker.rb
-    lib/keymaker/add_node_to_index_request.rb
-    lib/keymaker/batch_get_nodes_request.rb
     lib/keymaker/configuration.rb
-    lib/keymaker/create_node_request.rb
-    lib/keymaker/create_relationship_request.rb
-    lib/keymaker/delete_relationship_request.rb
-    lib/keymaker/execute_cypher_request.rb
-    lib/keymaker/execute_gremlin_request.rb
+    lib/keymaker/errors.rb
     lib/keymaker/indexing.rb
+    lib/keymaker/match_method.rb
     lib/keymaker/node.rb
-    lib/keymaker/path_traverse_request.rb
     lib/keymaker/rails_tasks.rb
     lib/keymaker/railtie.rb
-    lib/keymaker/remove_node_from_index_request.rb
-    lib/keymaker/request.rb
+    lib/keymaker/requests/add_node_to_index_request.rb
+    lib/keymaker/requests/batch_get_nodes_request.rb
+    lib/keymaker/requests/batch_request.rb
+    lib/keymaker/requests/create_node_request.rb
+    lib/keymaker/requests/create_relationship_request.rb
+    lib/keymaker/requests/delete_relationship_request.rb
+    lib/keymaker/requests/execute_cypher_request.rb
+    lib/keymaker/requests/execute_gremlin_request.rb
+    lib/keymaker/requests/path_traverse_request.rb
+    lib/keymaker/requests/remove_node_from_index_request.rb
+    lib/keymaker/requests/request.rb
+    lib/keymaker/requests/service_root_request.rb
+    lib/keymaker/requests/update_node_properties_request.rb
     lib/keymaker/response.rb
     lib/keymaker/serialization.rb
     lib/keymaker/service.rb
-    lib/keymaker/update_node_properties_request.rb
-    spec/keymaker/configuration_spec.rb
-    spec/keymaker/service_spec.rb
+    spec/cassettes/Keymaker_AddNodeToIndexRequest/returns_a_201_status_code.yml
+    spec/cassettes/Keymaker_AddNodeToIndexRequest/returns_application/json.yml
+    spec/cassettes/Keymaker_AddNodeToIndexRequest/returns_the_Neo4j_REST_API_starting_point_response_request.yml
+    spec/cassettes/Keymaker_ServiceRootRequest/returns_a_200_status_code.yml
+    spec/cassettes/Keymaker_ServiceRootRequest/returns_application/json.yml
+    spec/cassettes/Keymaker_ServiceRootRequest/returns_the_Neo4j_REST_API_starting_point_response_request.yml
+    spec/configuration_spec.rb
     spec/keymaker_spec.rb
+    spec/requests/add_node_to_index_request_spec.rb
+    spec/requests/batch_get_nodes_request_spec.rb
+    spec/requests/batch_request_spec.rb
+    spec/requests/service_root_request_spec.rb
+    spec/service_spec.rb
     spec/spec_helper.rb
     spec/support/keymaker.rb
+    spec/support/vcr.rb
   ]
   # = MANIFEST =
 
