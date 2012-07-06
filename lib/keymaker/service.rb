@@ -4,6 +4,8 @@ module Keymaker
 
   class Service
 
+    extend MatchMethodMacros
+
     attr_accessor :config
 
     def initialize(config)
@@ -22,13 +24,19 @@ module Keymaker
       end
     end
 
+    match_method(/_request$/) do |name, *args|
+      "Keymaker::#{name.to_s.classify}".constantize.new(self, args.first).submit
+    end
+
+    def method_missing(name, *args)
+      # match_method uses modules, so we can use super to delegate to
+      # the generated #method_missing definitions.
+      super
+    end
+
     # Create Node
     def create_node(attrs)
       create_node_request(attrs)
-    end
-
-    def create_node_request(opts)
-      CreateNodeRequest.new(self, opts).submit
     end
 
     # Update Node properties
@@ -36,17 +44,9 @@ module Keymaker
       update_node_properties_request({node_id: node_id}.merge(attrs))
     end
 
-    def update_node_properties_request(opts)
-      UpdateNodePropertiesRequest.new(self, opts).submit
-    end
-
     # Create Relationship
     def create_relationship(rel_type, start_node_id, end_node_id, data={})
       create_relationship_request({node_id: start_node_id, rel_type: rel_type, end_node_id: end_node_id, data: data})
-    end
-
-    def create_relationship_request(opts)
-      CreateRelationshipRequest.new(self, opts).submit
     end
 
     # Delete Relationship
@@ -54,17 +54,9 @@ module Keymaker
       delete_relationship_request(relationship_id: relationship_id)
     end
 
-    def delete_relationship_request(opts)
-      DeleteRelationshipRequest.new(self, opts).submit
-    end
-
     # Add Node to Index
     def add_node_to_index(index_name, key, value, node_id)
       add_node_to_index_request(index_name: index_name, key: key, value: value, node_id: node_id)
-    end
-
-    def add_node_to_index_request(opts)
-      AddNodeToIndexRequest.new(self, opts).submit
     end
 
     # Remove Node from Index
@@ -72,17 +64,9 @@ module Keymaker
       remove_node_from_index_request(index_name: index_name, key: key, value: value, node_id: node_id)
     end
 
-    def remove_node_from_index_request(opts)
-      RemoveNodeFromIndexRequest.new(self, opts).submit
-    end
-
     # Path Traverse
     def path_traverse(start_node_id, data={})
       path_traverse_request({node_id: start_node_id}.merge(data))
-    end
-
-    def path_traverse_request(opts)
-      PathTraverseRequest.new(self, opts).submit
     end
 
     # Batch
@@ -91,17 +75,9 @@ module Keymaker
       batch_get_nodes_request(node_ids)
     end
 
-    def batch_get_nodes_request(opts)
-      BatchGetNodesRequest.new(self, opts).submit
-    end
-
     # Cypher Query
     def execute_query(query, params)
       execute_cypher_request({query: query, params: params})
-    end
-
-    def execute_cypher_request(opts)
-      ExecuteCypherRequest.new(self, opts).submit
     end
 
     # Gremlin Script
@@ -109,12 +85,7 @@ module Keymaker
       execute_gremlin_request({script: script, params: params})
     end
 
-    def execute_gremlin_request(opts)
-      ExecuteGremlinRequest.new(self, opts).submit
-    end
-
     # HTTP Verbs
-
     def get(url, body)
       faraday_response = connection.get(parse_url(url), body)
       Keymaker::Response.new(self, faraday_response)
