@@ -19,6 +19,7 @@ require 'keymaker/requests/execute_gremlin_request'
 require 'keymaker/requests/path_traverse_request'
 require 'keymaker/requests/remove_node_from_index_request'
 require 'keymaker/requests/update_node_properties_request'
+require 'keymaker/requests/service_root_request'
 
 require 'keymaker/indexing'
 require 'keymaker/serialization'
