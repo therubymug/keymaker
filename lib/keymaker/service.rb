@@ -24,6 +24,7 @@ module Keymaker
       end
     end
 
+    # Raw requests to Neo4j REST API which live in lib/requests/*
     match_method(/_request$/) do |name, *args|
       "Keymaker::#{name.to_s.classify}".constantize.new(self, args.first).submit
     end
@@ -34,8 +35,10 @@ module Keymaker
       super
     end
 
+    ## Nodes
     # Create Node
     def create_node(attrs)
+      # TODO: parse response into manageable Ruby objects
       create_node_request(attrs)
     end
 
