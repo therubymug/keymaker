@@ -15,6 +15,7 @@ require 'keymaker/requests/batch_request'
 require 'keymaker/requests/batch_get_nodes_request'
 
 require 'keymaker/requests/create_node_request'
+require 'keymaker/requests/delete_node_request'
 require 'keymaker/requests/get_node_request'
 
 require 'keymaker/requests/add_node_to_index_request'

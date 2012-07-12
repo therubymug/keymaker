@@ -94,8 +94,8 @@ module Keymaker
       Keymaker::Response.new(self, faraday_response)
     end
 
-    def delete(url)
-      faraday_response = connection.delete(parse_url(url))
+    def delete(url, body={})
+      faraday_response = connection.delete(parse_url(url), body)
       Keymaker::Response.new(self, faraday_response)
     end
 

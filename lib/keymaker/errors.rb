@@ -15,6 +15,7 @@ module Keymaker
     end
   end
   class ClientError < HttpError; end
+  class ConflictError < ClientError; end
   class ResourceNotFound < ClientError; end
   class ServerError < HttpError; end
   class BatchRequestError < ServerError; end
