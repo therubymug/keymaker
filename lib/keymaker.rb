@@ -24,6 +24,8 @@ require 'keymaker/requests/update_node_properties_request'
 
 require 'keymaker/requests/create_relationship_request'
 require 'keymaker/requests/delete_relationship_request'
+require 'keymaker/requests/get_relationship_types_request'
+
 require 'keymaker/requests/execute_cypher_request'
 require 'keymaker/requests/execute_gremlin_request'
 require 'keymaker/requests/path_traverse_request'

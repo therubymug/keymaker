@@ -16,6 +16,7 @@ module Keymaker
     def_delegator :config, :path_traverse_node_path
     def_delegator :config, :relationship_path
     def_delegator :config, :relationships_path_for_node
+    def_delegator :config, :relationship_types_path
 
     def_delegator :response, :body
     def_delegator :response, :status

@@ -79,6 +79,10 @@ module Keymaker
       [data_directory, "relationship", relationship_id.to_s].join("/")
     end
 
+    def relationship_types_path
+      [data_directory, "relationship", "types"].join("/")
+    end
+
     def relationships_path_for_node(node_id)
       [node_path, node_id.to_s, "relationships"].join("/")
     end
