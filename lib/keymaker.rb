@@ -9,7 +9,7 @@ require 'keymaker/response'
 require 'keymaker/configuration'
 require 'keymaker/service'
 
-require 'keymaker/requests/request'
+require 'keymaker/request'
 
 require 'keymaker/requests/batch_request'
 require 'keymaker/requests/batch_get_nodes_request'
