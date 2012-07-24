@@ -7,7 +7,7 @@ end
 
 shared_context "Keymaker connections" do
   let(:connection) do
-    Faraday.new({url: "http://localhost:7477"}) do |conn|
+    Faraday.new({url: neo4j_host}) do |conn|
       conn.request :json
       conn.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
       conn.adapter :net_http
@@ -76,16 +76,20 @@ shared_context "John and Sarah indexed nodes" do
 
 end
 
+def neo4j_host
+  "http://localhost:7477"
+end
+
 def clear_graph
   raw_connection.post("/db/data/ext/GremlinPlugin/graphdb/execute_script", {script: "g.clear()\;g.V()"})
 end
 
 def clear_users_index
-  raw_connection.delete("http://localhost:7477/db/data/index/node/users")
+  raw_connection.delete("#{neo4j_host}/db/data/index/node/users")
 end
 
 def raw_connection
-  Faraday.new({url: "http://localhost:7477"}) do |conn|
+  Faraday.new({url: neo4j_host}) do |conn|
     conn.request :json
     conn.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
     conn.adapter :net_http
