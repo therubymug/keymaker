@@ -1,0 +1,195 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:7477/db/data/ext/GremlinPlugin/graphdb/execute_script
+    body:
+      encoding: UTF-8
+      string: ! '{"script":"g.clear();g.V()"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: !!null 
+    headers:
+      content-length:
+      - '3'
+      content-encoding:
+      - UTF-8
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - ! '*'
+      connection:
+      - close
+      server:
+      - Jetty(6.1.25)
+    body:
+      encoding: US-ASCII
+      string: ! '[ ]'
+    http_version: !!null 
+  recorded_at: Wed, 25 Jul 2012 01:03:19 GMT
+- request:
+    method: delete
+    uri: http://localhost:7477/db/data/index/node/users
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 404
+      message: !!null 
+    headers:
+      content-length:
+      - '422'
+      content-encoding:
+      - UTF-8
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - ! '*'
+      connection:
+      - close
+      server:
+      - Jetty(6.1.25)
+    body:
+      encoding: US-ASCII
+      string: ! "{\n  \"message\" : \"No node index named 'users'.\",\n  \"exception\"
+        : \"NotFoundException\",\n  \"stacktrace\" : [ \"org.neo4j.server.rest.web.DatabaseActions.removeNodeIndex(DatabaseActions.java:420)\",
+        \"org.neo4j.server.rest.web.RestfulGraphDatabase.deleteNodeIndex(RestfulGraphDatabase.java:729)\",
+        \"java.lang.reflect.Method.invoke(Method.java:597)\", \"org.neo4j.server.statistic.StatisticFilter.doFilter(StatisticFilter.java:62)\"
+        ]\n}"
+    http_version: !!null 
+  recorded_at: Wed, 25 Jul 2012 01:03:19 GMT
+- request:
+    method: post
+    uri: http://localhost:7477/db/data/node
+    body:
+      encoding: UTF-8
+      string: ! '{"email":"john@resistance.net"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: !!null 
+    headers:
+      content-length:
+      - '1138'
+      location:
+      - http://localhost:7477/db/data/node/389
+      content-encoding:
+      - UTF-8
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - ! '*'
+      connection:
+      - close
+      server:
+      - Jetty(6.1.25)
+    body:
+      encoding: US-ASCII
+      string: ! "{\n  \"extensions\" : {\n  },\n  \"paged_traverse\" : \"http://localhost:7477/db/data/node/389/paged/traverse/{returnType}{?pageSize,leaseTime}\",\n
+        \ \"outgoing_relationships\" : \"http://localhost:7477/db/data/node/389/relationships/out\",\n
+        \ \"traverse\" : \"http://localhost:7477/db/data/node/389/traverse/{returnType}\",\n
+        \ \"all_typed_relationships\" : \"http://localhost:7477/db/data/node/389/relationships/all/{-list|&|types}\",\n
+        \ \"property\" : \"http://localhost:7477/db/data/node/389/properties/{key}\",\n
+        \ \"all_relationships\" : \"http://localhost:7477/db/data/node/389/relationships/all\",\n
+        \ \"self\" : \"http://localhost:7477/db/data/node/389\",\n  \"properties\"
+        : \"http://localhost:7477/db/data/node/389/properties\",\n  \"outgoing_typed_relationships\"
+        : \"http://localhost:7477/db/data/node/389/relationships/out/{-list|&|types}\",\n
+        \ \"incoming_relationships\" : \"http://localhost:7477/db/data/node/389/relationships/in\",\n
+        \ \"incoming_typed_relationships\" : \"http://localhost:7477/db/data/node/389/relationships/in/{-list|&|types}\",\n
+        \ \"create_relationship\" : \"http://localhost:7477/db/data/node/389/relationships\",\n
+        \ \"data\" : {\n    \"email\" : \"john@resistance.net\"\n  }\n}"
+    http_version: !!null 
+  recorded_at: Wed, 25 Jul 2012 01:03:19 GMT
+- request:
+    method: post
+    uri: http://localhost:7477/db/data/node
+    body:
+      encoding: UTF-8
+      string: ! '{"email":"sarah@resistance.net"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: !!null 
+    headers:
+      content-length:
+      - '1139'
+      location:
+      - http://localhost:7477/db/data/node/390
+      content-encoding:
+      - UTF-8
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - ! '*'
+      connection:
+      - close
+      server:
+      - Jetty(6.1.25)
+    body:
+      encoding: US-ASCII
+      string: ! "{\n  \"extensions\" : {\n  },\n  \"paged_traverse\" : \"http://localhost:7477/db/data/node/390/paged/traverse/{returnType}{?pageSize,leaseTime}\",\n
+        \ \"outgoing_relationships\" : \"http://localhost:7477/db/data/node/390/relationships/out\",\n
+        \ \"traverse\" : \"http://localhost:7477/db/data/node/390/traverse/{returnType}\",\n
+        \ \"all_typed_relationships\" : \"http://localhost:7477/db/data/node/390/relationships/all/{-list|&|types}\",\n
+        \ \"property\" : \"http://localhost:7477/db/data/node/390/properties/{key}\",\n
+        \ \"all_relationships\" : \"http://localhost:7477/db/data/node/390/relationships/all\",\n
+        \ \"self\" : \"http://localhost:7477/db/data/node/390\",\n  \"properties\"
+        : \"http://localhost:7477/db/data/node/390/properties\",\n  \"outgoing_typed_relationships\"
+        : \"http://localhost:7477/db/data/node/390/relationships/out/{-list|&|types}\",\n
+        \ \"incoming_relationships\" : \"http://localhost:7477/db/data/node/390/relationships/in\",\n
+        \ \"incoming_typed_relationships\" : \"http://localhost:7477/db/data/node/390/relationships/in/{-list|&|types}\",\n
+        \ \"create_relationship\" : \"http://localhost:7477/db/data/node/390/relationships\",\n
+        \ \"data\" : {\n    \"email\" : \"sarah@resistance.net\"\n  }\n}"
+    http_version: !!null 
+  recorded_at: Wed, 25 Jul 2012 01:03:19 GMT
+- request:
+    method: post
+    uri: http://localhost:7477/db/data/node/390/relationships
+    body:
+      encoding: UTF-8
+      string: ! '{"to":"http://localhost:7477/db/data/node/389","type":"birthed"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: !!null 
+    headers:
+      content-length:
+      - '390'
+      location:
+      - http://localhost:7477/db/data/relationship/44
+      content-encoding:
+      - UTF-8
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - ! '*'
+      connection:
+      - close
+      server:
+      - Jetty(6.1.25)
+    body:
+      encoding: US-ASCII
+      string: ! "{\n  \"extensions\" : {\n  },\n  \"start\" : \"http://localhost:7477/db/data/node/390\",\n
+        \ \"property\" : \"http://localhost:7477/db/data/relationship/44/properties/{key}\",\n
+        \ \"self\" : \"http://localhost:7477/db/data/relationship/44\",\n  \"properties\"
+        : \"http://localhost:7477/db/data/relationship/44/properties\",\n  \"type\"
+        : \"birthed\",\n  \"end\" : \"http://localhost:7477/db/data/node/389\",\n
+        \ \"data\" : {\n  }\n}"
+    http_version: !!null 
+  recorded_at: Wed, 25 Jul 2012 01:03:19 GMT
+recorded_with: VCR 2.2.2
