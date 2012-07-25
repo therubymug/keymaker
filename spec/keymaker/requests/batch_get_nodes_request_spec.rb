@@ -12,10 +12,10 @@ describe Keymaker::BatchGetNodesRequest do
 
     it "builds the job descriptions collection" do
       batch_get_nodes_request.opts.should == [
-        {id: 0, to: "http://localhost:7477/db/data/node/1", method: "GET"},
-        {id: 1, to: "http://localhost:7477/db/data/node/2", method: "GET"},
-        {id: 2, to: "http://localhost:7477/db/data/node/3", method: "GET"},
-        {id: 3, to: "http://localhost:7477/db/data/node/4", method: "GET"}
+        {id: 0, to: "#{neo4j_host}/db/data/node/1", method: "GET"},
+        {id: 1, to: "#{neo4j_host}/db/data/node/2", method: "GET"},
+        {id: 2, to: "#{neo4j_host}/db/data/node/3", method: "GET"},
+        {id: 3, to: "#{neo4j_host}/db/data/node/4", method: "GET"}
       ]
     end
 

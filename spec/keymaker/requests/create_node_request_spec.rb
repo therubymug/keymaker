@@ -10,7 +10,7 @@ describe Keymaker::CreateNodeRequest, vcr: true do
     let(:options) {{name: "John Connor"}}
     it "creates a node with the given properties" do
       create_node_request.body.should include(
-        {"self"=>"http://localhost:7477/db/data/node/40", "data"=>{"name"=>"John Connor"}}
+        {"self"=>"#{neo4j_host}/db/data/node/40", "data"=>{"name"=>"John Connor"}}
       )
     end
   end
@@ -18,7 +18,7 @@ describe Keymaker::CreateNodeRequest, vcr: true do
   context "without properties" do
     it "creates an empty node" do
       create_node_request.body.should include(
-        {"self"=>"http://localhost:7477/db/data/node/41", "data"=>{}}
+        {"self"=>"#{neo4j_host}/db/data/node/41", "data"=>{}}
       )
     end
   end

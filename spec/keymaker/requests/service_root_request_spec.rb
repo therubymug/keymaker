@@ -8,17 +8,17 @@ describe Keymaker::ServiceRootRequest, vcr: true do
   it "returns the Neo4j REST API starting point response request" do
     service_root_request.body.should include(
       {
-        "cypher"             => "http://localhost:7477/db/data/cypher",
-        "relationship_index" => "http://localhost:7477/db/data/index/relationship",
-        "node"               => "http://localhost:7477/db/data/node",
-        "relationship_types" => "http://localhost:7477/db/data/relationship/types",
-        "batch"              => "http://localhost:7477/db/data/batch",
-        "extensions_info"    => "http://localhost:7477/db/data/ext",
-        "node_index"         => "http://localhost:7477/db/data/index/node",
+        "cypher"             => "#{neo4j_host}/db/data/cypher",
+        "relationship_index" => "#{neo4j_host}/db/data/index/relationship",
+        "node"               => "#{neo4j_host}/db/data/node",
+        "relationship_types" => "#{neo4j_host}/db/data/relationship/types",
+        "batch"              => "#{neo4j_host}/db/data/batch",
+        "extensions_info"    => "#{neo4j_host}/db/data/ext",
+        "node_index"         => "#{neo4j_host}/db/data/index/node",
         "extensions"         =>
         {
-          "CypherPlugin"   => {"execute_query"  => "http://localhost:7477/db/data/ext/CypherPlugin/graphdb/execute_query"},
-          "GremlinPlugin"  => {"execute_script" => "http://localhost:7477/db/data/ext/GremlinPlugin/graphdb/execute_script"}
+          "CypherPlugin"   => {"execute_query"  => "#{neo4j_host}/db/data/ext/CypherPlugin/graphdb/execute_query"},
+          "GremlinPlugin"  => {"execute_script" => "#{neo4j_host}/db/data/ext/GremlinPlugin/graphdb/execute_script"}
         }
       }
     )

@@ -77,8 +77,8 @@ describe Keymaker do
         let(:email) { john_email }
         let(:node_id) { -22 }
 
-        it "returns a 500 status" do
-          do_it.status.should == 500
+        it "raises ServerError" do
+          expect { do_it }.to raise_error(Keymaker::ServerError)
         end
 
       end
