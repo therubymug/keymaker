@@ -1,0 +1,108 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:7477/db/data/ext/GremlinPlugin/graphdb/execute_script
+    body:
+      encoding: UTF-8
+      string: ! '{"script":"g.clear();g.V()"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: !!null 
+    headers:
+      content-length:
+      - '3'
+      content-encoding:
+      - UTF-8
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - ! '*'
+      connection:
+      - close
+      server:
+      - Jetty(6.1.25)
+    body:
+      encoding: US-ASCII
+      string: ! '[ ]'
+    http_version: !!null 
+  recorded_at: Wed, 25 Jul 2012 17:17:22 GMT
+- request:
+    method: delete
+    uri: http://localhost:7477/db/data/index/node/users
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 404
+      message: !!null 
+    headers:
+      content-length:
+      - '422'
+      content-encoding:
+      - UTF-8
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - ! '*'
+      connection:
+      - close
+      server:
+      - Jetty(6.1.25)
+    body:
+      encoding: US-ASCII
+      string: ! "{\n  \"message\" : \"No node index named 'users'.\",\n  \"exception\"
+        : \"NotFoundException\",\n  \"stacktrace\" : [ \"org.neo4j.server.rest.web.DatabaseActions.removeNodeIndex(DatabaseActions.java:420)\",
+        \"org.neo4j.server.rest.web.RestfulGraphDatabase.deleteNodeIndex(RestfulGraphDatabase.java:729)\",
+        \"java.lang.reflect.Method.invoke(Method.java:597)\", \"org.neo4j.server.statistic.StatisticFilter.doFilter(StatisticFilter.java:62)\"
+        ]\n}"
+    http_version: !!null 
+  recorded_at: Wed, 25 Jul 2012 17:17:22 GMT
+- request:
+    method: post
+    uri: http://localhost:7477/db/data/cypher
+    body:
+      encoding: UTF-8
+      string: ! '{"query":"START ME UP"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 400
+      message: !!null 
+    headers:
+      content-length:
+      - '1031'
+      content-encoding:
+      - UTF-8
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - ! '*'
+      connection:
+      - close
+      server:
+      - Jetty(6.1.25)
+    body:
+      encoding: US-ASCII
+      string: ! "{\n  \"message\" : \"expected identifier assignment\\n\\\"START ME
+        UP\\\"\\n          ^\",\n  \"exception\" : \"SyntaxException\",\n  \"stacktrace\"
+        : [ \"org.neo4j.cypher.internal.parser.v1_8.CypherParserImpl.parse(CypherParserImpl.scala:44)\",
+        \"org.neo4j.cypher.CypherParser.parse(CypherParser.scala:44)\", \"org.neo4j.cypher.ExecutionEngine$$anonfun$prepare$1.apply(ExecutionEngine.scala:61)\",
+        \"org.neo4j.cypher.ExecutionEngine$$anonfun$prepare$1.apply(ExecutionEngine.scala:61)\",
+        \"org.neo4j.cypher.internal.LRUCache.getOrElseUpdate(LRUCache.scala:31)\",
+        \"org.neo4j.cypher.ExecutionEngine.prepare(ExecutionEngine.scala:61)\", \"org.neo4j.cypher.ExecutionEngine.execute(ExecutionEngine.scala:55)\",
+        \"org.neo4j.cypher.ExecutionEngine.execute(ExecutionEngine.scala:58)\", \"org.neo4j.cypher.javacompat.ExecutionEngine.execute(ExecutionEngine.java:86)\",
+        \"org.neo4j.server.rest.web.CypherService.cypher(CypherService.java:67)\",
+        \"java.lang.reflect.Method.invoke(Method.java:597)\", \"org.neo4j.server.statistic.StatisticFilter.doFilter(StatisticFilter.java:62)\"
+        ]\n}"
+    http_version: !!null 
+  recorded_at: Wed, 25 Jul 2012 17:17:22 GMT
+recorded_with: VCR 2.2.2

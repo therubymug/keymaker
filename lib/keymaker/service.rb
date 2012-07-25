@@ -80,7 +80,7 @@ module Keymaker
 
     # Cypher Query
     def execute_query(query, params)
-      execute_cypher_request({query: query, params: params})
+      execute_cypher_request({query: query, params: params}).body
     end
 
     # Gremlin Script
