@@ -69,7 +69,7 @@ module Keymaker
 
     # Path Traverse
     def path_traverse(start_node_id, data={})
-      path_traverse_request({node_id: start_node_id}.merge(data))
+      traverse_path_request({node_id: start_node_id}.merge(data))
     end
 
     # Batch

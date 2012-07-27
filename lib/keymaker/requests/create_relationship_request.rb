@@ -18,7 +18,6 @@ module Keymaker
           raise ServerError.new(response, response.body)
         end
       end
-
     end
 
     def rel_properties

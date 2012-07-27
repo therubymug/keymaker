@@ -28,7 +28,7 @@ require 'keymaker/requests/get_relationship_types_request'
 
 require 'keymaker/requests/execute_cypher_request'
 require 'keymaker/requests/execute_gremlin_request'
-require 'keymaker/requests/path_traverse_request'
+require 'keymaker/requests/traverse_path_request'
 require 'keymaker/requests/service_root_request'
 
 require 'keymaker/indexing'
