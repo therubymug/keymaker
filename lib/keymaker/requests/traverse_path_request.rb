@@ -9,7 +9,7 @@ module Keymaker
     # {"order":"breadth_first","uniqueness":"none","return_filter":{"language":"builtin","name":"all"}}
 
     def submit
-      service.post(path_traverse_node_path(opts[:node_id]), traverse_path_properties).on_error do |response|
+      service.post(node_traverse_path(opts[:node_id]), traverse_path_properties).on_error do |response|
         case response.status
         when (400..499)
           raise ClientError.new(response, response.body)
@@ -36,6 +36,10 @@ module Keymaker
         properties[:return_filter] = opts[:return_filter] if opts[:return_filter]
         properties[:max_depth] = opts[:max_depth] if opts[:max_depth]
       end
+    end
+
+    def node_traverse_path(node_id)
+      [node_path, node_id.to_s, "traverse", "path"].join("/")
     end
 
   end

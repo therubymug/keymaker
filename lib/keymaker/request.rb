@@ -3,7 +3,6 @@ module Keymaker
 
     extend Forwardable
 
-    def_delegator :config, :batch_node_path
     def_delegator :config, :batch_path
     def_delegator :config, :data_directory_path
     def_delegator :config, :full_cypher_path
@@ -13,7 +12,6 @@ module Keymaker
     def_delegator :config, :node_path
     def_delegator :config, :node_properties_path
     def_delegator :config, :node_uri
-    def_delegator :config, :path_traverse_node_path
     def_delegator :config, :relationship_path
     def_delegator :config, :relationships_path_for_node
     def_delegator :config, :relationship_types_path

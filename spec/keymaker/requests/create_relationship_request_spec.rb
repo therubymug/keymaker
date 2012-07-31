@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'keymaker'
 
 describe Keymaker::CreateRelationshipRequest, vcr: true do
-# describe Keymaker::CreateRelationshipRequest do
 
   include_context "John and Sarah nodes"
 
@@ -17,9 +16,10 @@ describe Keymaker::CreateRelationshipRequest, vcr: true do
         data: {location: "unknown", date: "1985-02-28"}
       }
     end
+
     it "creates a node with the given properties" do
       create_relationship_request.body.should include(
-        {"self"=>"#{neo4j_host}/db/data/relationship/40", "data"=>{"location"=>"unknown", "date"=>"1985-02-28"}, "type"=>"birthed"}
+        {"self"=>"#{neo4j_host}/db/data/relationship/18", "data"=>{"location"=>"unknown", "date"=>"1985-02-28"}, "type"=>"birthed"}
       )
     end
 
@@ -43,7 +43,7 @@ describe Keymaker::CreateRelationshipRequest, vcr: true do
     end
     it "creates an empty relationship of type: 'birthed'" do
       create_relationship_request.body.should include(
-        {"self"=>"#{neo4j_host}/db/data/relationship/44", "data"=>{}, "type"=>"birthed"}
+        {"self"=>"#{neo4j_host}/db/data/relationship/21", "data"=>{}, "type"=>"birthed"}
       )
     end
   end
