@@ -6,6 +6,30 @@ describe Keymaker do
 
   include_context "John and Sarah nodes"
 
+  describe "get_node" do
+
+    def do_it
+      service.get_node(node_id)
+    end
+
+    context "given a valid node id" do
+      let(:node_id) { john_node_id }
+
+      it "returns the node" do
+        do_it.body["data"]["email"].should == john_email
+      end
+    end
+
+    context "given an invalid node id" do
+      let(:node_id) { nil }
+
+      it "raises an error" do
+        expect { do_it }.to raise_error
+      end
+    end
+
+  end
+
   context "indices" do
     include_context "John and Sarah indexed nodes"
 

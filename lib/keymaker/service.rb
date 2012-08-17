@@ -42,6 +42,10 @@ module Keymaker
       create_node_request(attrs)
     end
 
+    def get_node(node_id)
+      get_node_request({node_id: node_id})
+    end
+
     # Update Node properties
     def update_node_properties(node_id, attrs)
       update_node_properties_request({node_id: node_id}.merge(attrs))
