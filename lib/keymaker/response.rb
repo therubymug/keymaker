@@ -27,6 +27,7 @@ module Keymaker
       if success?
         yield self
       end
+      self
     end
 
     def success?
