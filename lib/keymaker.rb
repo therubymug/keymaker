@@ -1,5 +1,6 @@
 require 'faraday'
 require 'faraday_middleware'
+require 'hashie'
 require 'active_model'
 require 'active_support/core_ext/string/inflections'
 
