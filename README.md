@@ -61,7 +61,7 @@ else
   # Heroku neo4j add-on
   Keymaker.configure do |c|
     c.server = ENV['NEO4J_HOST']
-    c.port = ENV['NEO4J_PORT'].to_i
+    c.port = ENV['NEO4J_PORT']
     c.username = ENV['NEO4J_LOGIN']
     c.password = ENV['NEO4J_PASSWORD']
   end

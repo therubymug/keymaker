@@ -115,7 +115,7 @@ module Keymaker
 
     def parse_url(url)
       connection.build_url(url).tap do |uri|
-        if uri.port != config.port
+        if uri.port != Integer(config.port)
           raise RuntimeError, "bad port"
         end
       end
