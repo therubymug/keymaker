@@ -24,7 +24,7 @@ rake neo4j:start RAILS_ENV=test
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'keymaker'
+gem "keymaker"
 ```
 
 And then execute:
@@ -52,18 +52,18 @@ Then, create a Rails initializer `config/initializers/keymaker.rb`:
 
 ```ruby
 if Rails.env.development? || Rails.env.test?
-  database_config = YAML::load_file('config/neo4j.yml')
+  database_config = YAML::load_file("config/neo4j.yml")
   Keymaker.configure do |c|
-    c.server = database_config["#{Rails.env}"]['server']
-    c.port = database_config["#{Rails.env}"]['port']
+    c.server = database_config["#{Rails.env}"]["server"]
+    c.port = database_config["#{Rails.env}"]["port"]
   end
 else
   # Heroku neo4j add-on
   Keymaker.configure do |c|
-    c.server = ENV['NEO4J_HOST']
-    c.port = ENV['NEO4J_PORT']
-    c.username = ENV['NEO4J_LOGIN']
-    c.password = ENV['NEO4J_PASSWORD']
+    c.server = ENV["NEO4J_HOST"]
+    c.port = ENV["NEO4J_PORT"]
+    c.username = ENV["NEO4J_LOGIN"]
+    c.password = ENV["NEO4J_PASSWORD"]
   end
 end
 ```
@@ -79,17 +79,41 @@ end
 
 ## Create a node ##
 
-response = Keymaker.service.create_node_request({:name => 'John Connor', :catch_phrase => 'No problemo'})
+terminator_response = Keymaker.service.create_node_request({:name => "Terminator",
+                                                 :catch_phrase => "I'll be back"})
+terminator = Keymaker.service.get_node(terminator_response.neo4j_id)
+ 
+john_response = Keymaker.service.create_node_request({:name => "John Connor",
+                                                 :catch_phrase => "No problemo"})
+
+john_connor = Keymaker.service.get_node(john_response.neo4j_id)
+john_connor.name # => "John Connor"
+john_connor.catch_phrase # => "No problemo"
 
 ## Update node properties ##
 
+Keymaker.service.update_node_properties_request({:node_id => john_connor.neo4j_id,
+                                                 :catch_phrase => "Easy money!"})
+
+john_connor.catch_phrase # => "Easy money!"
+
 ## Delete a node ##
+
+Keymaker.service.delete_node_request({:node_id => john_connor.neo4j_id})
+
+Keymaker.service.get_node_request({:node_id => john_connor.neo4j_id})
+# => Keymaker::ResourceNotFound raised
 
 ## Create a relationship ##
 
-## Update relationship properties ##
+rel = Keymaker.service.create_relationship_request({:node_id => john_connor.neo4j_id,
+                                                    :end_node_id => terminator.neo4j_id,
+                                                    :rel_type => "knows",
+                                                    :data => {:since => "Summer of 1984"})
 
 ## Delete a relationship ##
+
+Keymaker.service.delete_relationship_request(:relationship_id => rel.neo4j_id)
 
 ```
 
