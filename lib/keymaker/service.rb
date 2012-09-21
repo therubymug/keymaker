@@ -54,6 +54,11 @@ module Keymaker
       update_node_properties_request({node_id: node_id}.merge(attrs))
     end
 
+    # Delete Node
+    def delete_node(node_id)
+      delete_node_request(node_id: node_id)
+    end
+
     # Create Relationship
     def create_relationship(rel_type, start_node_id, end_node_id, data={})
       create_relationship_request({node_id: start_node_id, rel_type: rel_type, end_node_id: end_node_id, data: data})
