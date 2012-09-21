@@ -2,6 +2,10 @@
 
 A multi-layer REST API Ruby wrapper for the Neo4j graph database built on top of [Faraday][].
 
+- Layer 1 interacts with the Neo4j REST API raw requests
+- Layer 2 binds the raw HTTP requests into Ruby Objects
+- Layer 3 implements ActiveModel and treats Nodes and Relationships as Ruby Objects
+
 ```
 Oracle: Our time is up. Listen to me, Neo.
         You can save Zion if you reach The Source,
@@ -80,11 +84,11 @@ end
 ## Create a node ##
 
 terminator_response = Keymaker.service.create_node_request({:name => "Terminator",
-                                                 :catch_phrase => "I'll be back"})
+                                                            :catch_phrase => "I'll be back"})
 terminator = Keymaker.service.get_node(terminator_response.neo4j_id)
  
 john_response = Keymaker.service.create_node_request({:name => "John Connor",
-                                                 :catch_phrase => "No problemo"})
+                                                      :catch_phrase => "No problemo"})
 
 john_connor = Keymaker.service.get_node(john_response.neo4j_id)
 john_connor.name # => "John Connor"
@@ -94,13 +98,11 @@ john_connor.catch_phrase # => "No problemo"
 
 Keymaker.service.update_node_properties_request({:node_id => john_connor.neo4j_id,
                                                  :catch_phrase => "Easy money!"})
-
 john_connor.catch_phrase # => "Easy money!"
 
 ## Delete a node ##
 
 Keymaker.service.delete_node_request({:node_id => john_connor.neo4j_id})
-
 Keymaker.service.get_node_request({:node_id => john_connor.neo4j_id})
 # => Keymaker::ResourceNotFound raised
 
