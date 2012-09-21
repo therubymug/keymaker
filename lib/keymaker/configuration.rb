@@ -1,5 +1,4 @@
 require "addressable/uri"
-require "ostruct"
 
 module Keymaker
   class Configuration
@@ -18,7 +17,7 @@ module Keymaker
     end
 
     def service_root
-      @service_root ||= OpenStruct.new(Keymaker.service.service_root_request.body)
+      @service_root ||= Keymaker.service.service_root_request.body
     end
 
     def service_root_url

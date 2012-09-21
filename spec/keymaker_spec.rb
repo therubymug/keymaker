@@ -16,7 +16,7 @@ describe Keymaker do
       let(:node_id) { john_node_id }
 
       it "returns the node" do
-        do_it.body["data"]["email"].should == john_email
+        do_it.email.should == john_email
       end
     end
 

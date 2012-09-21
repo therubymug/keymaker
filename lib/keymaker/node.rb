@@ -96,8 +96,8 @@ module Keymaker
         neo_service.create_node(sanitize(attributes)).on_success do |response|
           self.node_id = response.neo4j_id
           self.new_node = false
-          self
         end
+        self
       end
     end
 

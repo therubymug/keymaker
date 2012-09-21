@@ -8,8 +8,9 @@ end
 shared_context "Keymaker connections" do
   let(:connection) do
     Faraday.new({url: neo4j_host}) do |conn|
+      conn.use FaradayMiddleware::Mashify
       conn.request :json
-      conn.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
+      conn.response :json, :content_type => /\bjson$/
       conn.adapter :net_http
     end
   end
@@ -18,6 +19,7 @@ shared_context "Keymaker connections" do
   end
   let(:test_connection) do
     Faraday.new do |conn|
+      conn.use FaradayMiddleware::Mashify
       conn.adapter :test, faraday_stubs
     end
   end

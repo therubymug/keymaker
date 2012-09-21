@@ -18,8 +18,9 @@ module Keymaker
 
     def connection
       @connection ||= Faraday.new(url: config.connection_service_root_url) do |conn|
+        conn.use FaradayMiddleware::Mashify
         conn.request :json
-        conn.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
+        conn.response :json, :content_type => /\bjson$/
         conn.adapter :net_http
       end
     end
@@ -43,7 +44,9 @@ module Keymaker
     end
 
     def get_node(node_id)
-      get_node_request({node_id: node_id})
+      response = get_node_request({node_id: node_id})
+      data = response.body.data
+      data.merge!("neo4j_id" => response.neo4j_id, "__raw_response__" => response)
     end
 
     # Update Node properties
