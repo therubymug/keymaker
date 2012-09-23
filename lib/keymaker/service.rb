@@ -36,8 +36,6 @@ module Keymaker
       super
     end
 
-    ## Nodes
-    # Create Node
     def create_node(attrs)
       # TODO: parse response into manageable Ruby objects
       create_node_request(attrs)
@@ -49,58 +47,46 @@ module Keymaker
       data.merge!("neo4j_id" => response.neo4j_id, "__raw_response__" => response)
     end
 
-    # Update Node properties
     def update_node_properties(node_id, attrs)
       update_node_properties_request({node_id: node_id}.merge(attrs))
     end
 
-    # Delete Node
     def delete_node(node_id)
       delete_node_request(node_id: node_id)
     end
 
-    # Create Relationship
     def create_relationship(rel_type, start_node_id, end_node_id, data={})
       create_relationship_request({node_id: start_node_id, rel_type: rel_type, end_node_id: end_node_id, data: data})
     end
 
-    # Delete Relationship
     def delete_relationship(relationship_id)
       delete_relationship_request(relationship_id: relationship_id)
     end
 
-    # Add Node to Index
     def add_node_to_index(index_name, key, value, node_id)
       add_node_to_index_request(index_name: index_name, key: key, value: value, node_id: node_id)
     end
 
-    # Remove Node from Index
     def remove_node_from_index(index_name, key, value, node_id)
       remove_node_from_index_request(index_name: index_name, key: key, value: value, node_id: node_id)
     end
 
-    # Path Traverse
     def path_traverse(start_node_id, data={})
       traverse_path_request({node_id: start_node_id}.merge(data))
     end
 
-    # Batch
-    ## GET Nodes
     def batch_get_nodes(node_ids)
       batch_get_nodes_request(node_ids)
     end
 
-    # Cypher Query
     def execute_query(query, params)
       execute_cypher_request({query: query, params: params}).body
     end
 
-    # Gremlin Script
     def execute_script(script, params={})
       execute_gremlin_request({script: script, params: params})
     end
 
-    # HTTP Verbs
     def get(url, body)
       faraday_response = connection.get(parse_url(url), body)
       Keymaker::Response.new(self, faraday_response)
