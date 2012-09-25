@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'hashie'
   s.add_dependency 'faraday'
   s.add_dependency 'faraday_middleware'
+  s.add_dependency 'neo4j-cypher'
 
   s.add_development_dependency 'fakeweb'
   s.add_development_dependency 'rake'

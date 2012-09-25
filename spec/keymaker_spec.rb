@@ -1,6 +1,7 @@
 require 'spec_helper'
 require "addressable/uri"
 require 'keymaker'
+require 'neo4j-cypher'
 
 describe Keymaker do
 
@@ -154,8 +155,6 @@ describe Keymaker do
 
     let(:do_it) { service.execute_cypher(cypher_string, {}) }
 
-    before { service.add_node_to_index(:users, :email, john_email, john_node_id) }
-
     context "setting key with as" do
       let(:cypher_string) { "START n=node(*) RETURN n.email AS email" }
 
@@ -174,6 +173,27 @@ describe Keymaker do
 
     context "asks for entire object" do
       let(:cypher_string) { "START n=node(*) RETURN n" }
+
+      it "performs the cypher query and responds" do
+        do_it.first.email.should == john_email
+      end
+    end
+
+    context "with no return" do
+      let(:cypher_string) { "CREATE n={email: 'kyle@resistance.net' }" }
+
+      it "returns an empty array" do
+        do_it.should == []
+      end
+
+    end
+
+    context "with a Neo4j::Cypher::Result" do
+      let(:cypher_string) do
+        ::Neo4j::Cypher.query do
+          n = node("*").ret(:email).as(:email)
+        end
+      end
 
       it "performs the cypher query and responds" do
         do_it.first.email.should == john_email

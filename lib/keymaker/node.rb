@@ -42,24 +42,9 @@ module Keymaker
         property_traits.keys
       end
 
-      def property(attribute,type=String)
+      def property(attribute, type = String)
         property_traits[attribute] = type
         attr_accessor attribute
-      end
-
-      def find_by_cypher(query, params={}, return_type=:results_only)
-        executed_query = neo_service.execute_cypher(query, params)
-        if executed_query.present?
-          case return_type
-          when :results_only
-            executed_query["data"].flatten
-          # TODO: Make this less specific
-          when :full_user
-            {"user" => executed_query["data"].flatten[0]["data"], "neo_id" => executed_query["data"].flatten[1]}
-          end
-        else
-          return []
-        end
       end
 
     end
