@@ -208,6 +208,23 @@ describe Keymaker do
 
     end
 
+    describe "#delete_relationship" do
+
+      def do_it
+        service.delete_relationship(relationship_id)
+        connection.get("/db/data/node/#{john_node_id}/relationships/all").body
+      end
+
+      let(:relationship_id) do
+        service.create_relationship(:loves, john_node_id, sarah_node_id).neo4j_id
+      end
+
+      it "deletes the relationship" do
+        do_it.should == []
+      end
+
+    end
+
   end
 
 end
