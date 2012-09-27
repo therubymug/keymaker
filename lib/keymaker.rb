@@ -37,6 +37,8 @@ require 'keymaker/indexing'
 require 'keymaker/serialization'
 require 'keymaker/node'
 
+require 'keymaker/finders'
+
 require 'keymaker/railtie' if defined? Rails::Railtie
 
 module Keymaker

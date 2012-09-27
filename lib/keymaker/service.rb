@@ -79,7 +79,7 @@ module Keymaker
       batch_get_nodes_request(node_ids)
     end
 
-    def execute_cypher(query, params)
+    def execute_cypher(query, params={})
       response = execute_cypher_request({query: query, params: params})
       Keymaker::CypherResponseParser.parse(response.body)
     end
