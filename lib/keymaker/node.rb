@@ -47,8 +47,8 @@ module Keymaker
         attr_accessor attribute
       end
 
-      def execute_cypher(query, params={}, return_type=:results_only)
-        executed_query = neo_service.execute_query(query, params)
+      def find_by_cypher(query, params={}, return_type=:results_only)
+        executed_query = neo_service.execute_cypher(query, params)
         if executed_query.present?
           case return_type
           when :results_only

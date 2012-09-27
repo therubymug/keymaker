@@ -7,6 +7,7 @@ require 'active_support/core_ext/string/inflections'
 require 'keymaker/match_method'
 require 'keymaker/errors'
 require 'keymaker/response'
+require 'parsers/cypher_response_parser'
 require 'keymaker/configuration'
 require 'keymaker/service'
 

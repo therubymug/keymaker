@@ -150,21 +150,34 @@ describe Keymaker do
     end
   end
 
-  describe "#execute_query" do
+  describe "#execute_cypher" do
 
-    def do_it
-      service.execute_query("START user=node:users(email={email}) RETURN user", email: john_email)
-    end
+    let(:do_it) { service.execute_cypher(cypher_string, {}) }
 
-    context "given existing values" do
+    before { service.add_node_to_index(:users, :email, john_email, john_node_id) }
 
-      before { service.add_node_to_index(:users, :email, john_email, john_node_id) }
-      let(:query_result) { do_it["data"][0][0]["self"] }
+    context "setting key with as" do
+      let(:cypher_string) { "START n=node(*) RETURN n.email AS email" }
 
       it "performs the cypher query and responds" do
-        query_result.should == john_node_url
+        do_it.first.email.should == john_email
       end
+    end
 
+    context "not setting the key" do
+      let(:cypher_string) { "START n=node(*) RETURN n.email" }
+
+      it "performs the cypher query and responds" do
+        do_it.first["n.email"].should == john_email
+      end
+    end
+
+    context "asks for entire object" do
+      let(:cypher_string) { "START n=node(*) RETURN n" }
+
+      it "performs the cypher query and responds" do
+        do_it.first.email.should == john_email
+      end
     end
 
   end

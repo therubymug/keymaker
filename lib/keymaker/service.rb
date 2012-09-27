@@ -18,8 +18,8 @@ module Keymaker
 
     def connection
       @connection ||= Faraday.new(url: config.connection_service_root_url) do |conn|
-        conn.use FaradayMiddleware::Mashify
         conn.request :json
+        conn.response :mashify
         conn.response :json, :content_type => /\bjson$/
         conn.adapter :net_http
       end
@@ -79,8 +79,9 @@ module Keymaker
       batch_get_nodes_request(node_ids)
     end
 
-    def execute_query(query, params)
-      execute_cypher_request({query: query, params: params}).body
+    def execute_cypher(query, params)
+      response = execute_cypher_request({query: query, params: params})
+      Keymaker::CypherResponseParser.parse(response.body)
     end
 
     def execute_script(script, params={})
