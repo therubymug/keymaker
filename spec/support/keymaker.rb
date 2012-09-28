@@ -79,7 +79,7 @@ shared_context "John and Sarah indexed nodes" do
 end
 
 def neo4j_host
-  "http://localhost:7477"
+  "http://#{Keymaker.configuration.server}:#{Keymaker.configuration.port}"
 end
 
 def clear_graph

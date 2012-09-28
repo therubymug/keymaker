@@ -5,7 +5,7 @@ describe Keymaker::ExecuteCypherRequest, vcr: true do
   let(:execute_cypher_request) { Keymaker::ExecuteCypherRequest.new(Keymaker.service, opts).submit }
 
   context "with a valid Cypher Query" do
-    let(:opts) { {query: "CREATE (n {name : 'John Connor'}) RETURN n;"} }
+    let(:opts) { {query: "START a = node(*) return a"} }
     it "returns a 200 status code" do
       execute_cypher_request.status.should == 200
     end

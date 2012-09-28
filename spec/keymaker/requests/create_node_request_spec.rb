@@ -3,32 +3,38 @@ require 'keymaker'
 
 describe Keymaker::CreateNodeRequest, vcr: true do
 
-  let(:create_node_request) { Keymaker::CreateNodeRequest.new(Keymaker.service, options).submit }
+  let(:response) { Keymaker::CreateNodeRequest.new(Keymaker.service, options).submit }
   let(:options) {{}}
+  let(:node_id) { response.neo4j_id }
+  let(:faraday_response) { response.faraday_response }
+  let(:status) { response.status }
+  let(:body) { response.body }
 
   context "with properties" do
     let(:options) {{name: "John Connor"}}
     it "creates a node with the given properties" do
-      create_node_request.body.should include(
-        {"self"=>"#{neo4j_host}/db/data/node/40", "data"=>{"name"=>"John Connor"}}
-      )
+      body.should include({
+        "self" => "#{neo4j_host}/db/data/node/#{node_id}",
+        "data" => {"name"=>"John Connor"}
+      })
     end
   end
 
   context "without properties" do
     it "creates an empty node" do
-      create_node_request.body.should include(
-        {"self"=>"#{neo4j_host}/db/data/node/41", "data"=>{}}
-      )
+      body.should include({
+        "self" => "#{neo4j_host}/db/data/node/#{node_id}",
+        "data"=>{}
+      })
     end
   end
 
   it "returns a 201 status code" do
-    create_node_request.status.should == 201
+    status.should == 201
   end
 
   it "returns application/json" do
-    create_node_request.faraday_response.headers["content-type"].should include("application/json")
+    faraday_response.headers["content-type"].should include("application/json")
   end
 
 end

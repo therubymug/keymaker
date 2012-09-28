@@ -23,7 +23,7 @@ describe Keymaker::UpdateNodePropertiesRequest, vcr: true do
     let(:options) do
       {node_id: john_node_id, email: "john.connor@resistance.net"}
     end
-    let(:john_node_query) {  {query: "START n=node({node_id}) RETURN n.email;", params: {node_id: john_node_id.to_i}} }
+    let(:john_node_query) {  {query: "START n=node({node_id}) RETURN n.email", params: {node_id: john_node_id.to_i}} }
     let(:john_node_cypher_request) { Keymaker::ExecuteCypherRequest.new(Keymaker.service, john_node_query).submit }
     let(:john_node_email) { john_node_cypher_request.body["data"][0][0] }
 
