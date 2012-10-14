@@ -156,7 +156,7 @@ describe Keymaker do
 
     before { service.add_node_to_index(:users, :email, john_email, john_node_id) }
 
-    context "setting key with as" do
+    context "setting key with AS" do
       let(:cypher_string) { "START n=node(*) RETURN n.email AS email" }
 
       it "performs the cypher query and responds" do
@@ -168,7 +168,7 @@ describe Keymaker do
       let(:cypher_string) { "START n=node(*) RETURN n.email" }
 
       it "performs the cypher query and responds" do
-        do_it.first["n.email"].should == john_email
+        do_it.first.email.should == john_email
       end
     end
 

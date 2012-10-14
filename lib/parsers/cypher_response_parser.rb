@@ -3,7 +3,7 @@ module Keymaker
 
     def self.parse(response_body)
       response_body.data.map do |result|
-        if result.first.kind_of?(Hashie::Mash)
+        if response_body.columns.one? && result.first.kind_of?(Hashie::Mash)
           result.first.data
         else
           translate_response(response_body, result)
@@ -12,7 +12,13 @@ module Keymaker
     end
 
     def self.translate_response(response_body, result)
-      Hashie::Mash.new(Hash[response_body.columns.zip(result)])
+      Hashie::Mash.new(Hash[sanitized_column_names(response_body).zip(result)])
+    end
+
+    def self.sanitized_column_names(response_body)
+      response_body.columns.map do |column|
+        column[/[^\.]+$/]
+      end
     end
 
   end

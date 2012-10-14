@@ -12,7 +12,7 @@ module Keymaker::Serialization
       when Time
         Time.at(v)
       when String
-        DateTime.strptime(v).to_time
+        v.to_time
       else
         Time.now.utc
       end
@@ -43,4 +43,5 @@ module Keymaker::Serialization
       self.class.properties.each{|property| hash[property.to_s] }
     end
   end
+
 end
