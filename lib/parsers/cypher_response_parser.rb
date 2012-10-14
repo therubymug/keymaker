@@ -3,8 +3,12 @@ module Keymaker
 
     def self.parse(response_body)
       response_body.data.map do |result|
-        if result.first.kind_of?(Hashie::Mash)
-          result.first.data
+        if response_body.columns.one?
+          if result.first.kind_of?(Hashie::Mash)
+            result.first.data
+          else
+            result.first
+          end
         else
           translate_response(response_body, result)
         end
