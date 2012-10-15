@@ -13,7 +13,7 @@ require 'active_support/hash_with_indifferent_access'
 require 'keymaker/match_method'
 require 'keymaker/errors'
 require 'keymaker/response'
-require 'parsers/cypher_response_parser'
+require 'keymaker/parsers/cypher_response_parser'
 require 'keymaker/configuration'
 require 'keymaker/service'
 
