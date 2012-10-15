@@ -43,7 +43,7 @@ require 'keymaker/railtie' if defined? Rails::Railtie
 
 module Keymaker
 
-  VERSION = "0.0.9"
+  VERSION = "0.1.0"
 
   def self.service
     @service ||= Keymaker::Service.new(Keymaker::Configuration.new)
