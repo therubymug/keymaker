@@ -24,6 +24,7 @@ module Keymaker
       end
 
       base.after_save :update_indices
+      base.after_create :add_node_type_index
 
       base.class_attribute :property_traits
       base.class_attribute :indices_traits
@@ -118,6 +119,10 @@ module Keymaker
       def update(attrs)
         process_attrs(sanitize(attrs.merge(updated_at: Time.now.utc.to_i)))
         neo_service.update_node_properties(node_id, sanitize(attributes))
+      end
+
+      def add_node_type_index
+        neo_service.add_node_to_index('nodes', 'node_type', self.class.model_name, node_id)
       end
 
       def persisted?

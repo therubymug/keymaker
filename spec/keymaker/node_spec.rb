@@ -21,6 +21,15 @@ describe Keymaker::Node do
     it { should be_a(Terminator) }
   end
 
+  context "callbacks" do
+    context ":after_create" do
+      it "adds the node type to the 'nodes' index'" do
+        Terminator.neo_service.should_receive(:add_node_to_index).with('nodes', 'node_type', 'Terminator', kind_of(Integer))
+        Terminator.create(name: 'T1000')
+      end
+    end
+  end
+
   describe ".find(node_id)" do
 
     subject { Terminator.find(node_id) }
