@@ -19,7 +19,7 @@ module Keymaker
         extend Keymaker::Node::ClassMethods
         include Keymaker::Node::InstanceMethods
 
-        attr_writer :new_node
+        attr_accessor :new_node
         attr_protected :created_at, :updated_at
       end
 
@@ -62,7 +62,7 @@ module Keymaker
       end
 
       def find_all_by_cypher(query, params={})
-        neo_service.execute_cypher(query, params)
+        neo_service.execute_cypher(query, params).map{ |node| new(node, false) }
       end
 
       def find(node_id)
@@ -79,17 +79,17 @@ module Keymaker
 
     module InstanceMethods
 
-      def initialize(attrs = {})
-        @new_node = true
+      def initialize(attrs = {}, new_node=true)
+        self.new_node = new_node
         process_attrs(attrs) if attrs.present?
+      end
+
+      def new_node?
+        new_node
       end
 
       def neo_service
         self.class.neo_service
-      end
-
-      def new?
-        @new_node
       end
 
       def sanitize(attrs)
@@ -102,7 +102,7 @@ module Keymaker
 
       def create_or_update
         run_callbacks :save do
-          new? ? create : update(attributes)
+          new_node? ? create : update(attributes)
         end
       end
 

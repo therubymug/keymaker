@@ -17,7 +17,7 @@ describe Keymaker::Node do
     subject { terminator }
     its(:node_id) { should be_present }
     its(:name) { should == 'T1000' }
-    it { should_not be_new }
+    it { should_not be_new_node }
     it { should be_a(Terminator) }
   end
 
@@ -40,7 +40,7 @@ describe Keymaker::Node do
       its(:node_id) { should be_present }
       its(:name) { should == 'T1000' }
       it { should be_present }
-      it { should_not be_new }
+      it { should_not be_new_node }
       it { should be_a(Terminator) }
     end
 
