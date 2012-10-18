@@ -17,7 +17,7 @@ describe Keymaker::Node do
     subject { terminator }
     its(:node_id) { should be_present }
     its(:name) { should == 'T1000' }
-    it { should_not be_new }
+    it { should_not be_new_node }
     it { should be_a(Terminator) }
   end
 
@@ -30,6 +30,25 @@ describe Keymaker::Node do
     end
   end
 
+  describe ".find_all_by_cypher(query, params)" do
+
+    subject { Terminator.find_all_by_cypher(query) }
+    let(:query) { "START all=node(*) RETURN all" }
+
+    context "with existing nodes" do
+      before { terminator }
+      it { should be_a(Array) }
+      its(:first) { should_not be_new_node }
+      its(:first) { should be_a(Terminator) }
+    end
+
+    context "without existing nodes" do
+      it { should be_a(Array) }
+      it { should be_blank }
+    end
+
+  end
+
   describe ".find(node_id)" do
 
     subject { Terminator.find(node_id) }
@@ -40,7 +59,7 @@ describe Keymaker::Node do
       its(:node_id) { should be_present }
       its(:name) { should == 'T1000' }
       it { should be_present }
-      it { should_not be_new }
+      it { should_not be_new_node }
       it { should be_a(Terminator) }
     end
 
