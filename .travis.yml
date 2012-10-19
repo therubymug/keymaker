@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+  - 1.9.2
+  - 1.9.3
+branches:
+  only:
+    - master
+after_script:
+  - rake neo4j:install
+  - rake neo4j:start

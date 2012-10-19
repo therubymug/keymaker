@@ -1,5 +1,6 @@
 # Keymaker
 
+[![Build Status](https://travis-ci.org/therubymug/keymaker.png)](https://travis-ci.org/therubymug/keymaker)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/therubymug/keymaker)
 
 A multi-layer REST API Ruby wrapper for the Neo4j graph database built on top of [Faraday][].
