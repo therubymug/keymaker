@@ -134,9 +134,9 @@ NEO4J_PORT = ENV['NEO4J_PORT'] || '7477' # Don't clobber standard neo4j ports 74
 
 namespace :neo4j do
 
-  desc "Install neo4j on localhost:#{NEO4J_PORT}. e.g. rake neo4j:install[community,1.8.RC1]"
+  desc "Install neo4j on localhost:#{NEO4J_PORT}. e.g. rake neo4j:install[community,1.9-SNAPSHOT]"
   task :install, :edition, :version do |t, args|
-    args.with_defaults(:edition => "community", :version => "1.7")
+    args.with_defaults(:edition => "community", :version => "1.8")
 
     source_name = "neo4j-#{args[:edition]}-#{args[:version]}"
     tarball = "#{source_name}-unix.tar.gz"
