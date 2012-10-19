@@ -5,6 +5,7 @@ rvm:
 branches:
   only:
     - master
-after_install:
+before_script:
+  - bundle install
   - rake neo4j:install
   - rake neo4j:start
