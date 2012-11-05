@@ -1,6 +1,7 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'hashie'
+require 'virtus'
 require 'active_model'
 require 'active_model/validations'
 require 'active_model/callbacks'
@@ -10,10 +11,12 @@ require 'active_support/core_ext/class/attribute'
 require 'active_support/core_ext/string/conversions'
 require 'active_support/hash_with_indifferent_access'
 
+require 'keymaker/active_record_sync'
 require 'keymaker/match_method'
 require 'keymaker/errors'
 require 'keymaker/response'
 require 'keymaker/parsers/cypher_response_parser'
+require 'keymaker/parsers/cypher_result'
 require 'keymaker/configuration'
 require 'keymaker/service'
 
@@ -36,7 +39,6 @@ require 'keymaker/requests/traverse_path_request'
 require 'keymaker/requests/service_root_request'
 
 require 'keymaker/indexing'
-require 'keymaker/serialization'
 require 'keymaker/node'
 
 require 'keymaker/railtie' if defined? Rails::Railtie

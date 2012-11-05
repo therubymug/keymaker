@@ -7,6 +7,7 @@ module Keymaker
     def self.included(base)
 
       base.class_eval do
+        include Virtus
         extend ActiveModel::Callbacks
         extend ActiveModel::Naming
         include ActiveModel::MassAssignmentSecurity
@@ -14,7 +15,6 @@ module Keymaker
         include ActiveModel::Conversion
 
         include Keymaker::Indexing
-        include Keymaker::Serialization
 
         extend Keymaker::Node::ClassMethods
         include Keymaker::Node::InstanceMethods
@@ -23,34 +23,28 @@ module Keymaker
         attr_protected :created_at, :updated_at
       end
 
+      base.define_model_callbacks :save, :create
+
       base.after_save :update_indices
       base.after_create :add_node_type_index
-
-      base.class_attribute :property_traits
       base.class_attribute :indices_traits
-
-      base.property_traits = {}
       base.indices_traits = {}
 
-      base.property :active_record_id, Integer
-      base.property :node_id, Integer
-      base.property :created_at, DateTime
-      base.property :updated_at, DateTime
+      base.attribute :sync_id, Integer
+      base.attribute :neo4j_id, Integer
+      base.attribute :created_at, DateTime
+      base.attribute :updated_at, DateTime
 
     end
 
     module ClassMethods
+
       extend Forwardable
 
       def_delegator :Keymaker, :service, :neo_service
 
       def properties
-        property_traits.keys
-      end
-
-      def property(attribute,type=String)
-        property_traits[attribute] = type
-        attr_accessor attribute
+        attribute_set.entries.map(&:name)
       end
 
       def create(attributes)
@@ -69,7 +63,7 @@ module Keymaker
         node = neo_service.get_node(node_id)
         if node.present?
           new(node.slice(*properties)).tap do |neo_node|
-            neo_node.node_id = node.neo4j_id
+            neo_node.neo4j_id = node.neo4j_id
             neo_node.new_node = false
           end
         end
@@ -78,7 +72,6 @@ module Keymaker
       def wrap(node_attrs)
         new(node_attrs).tap do |node|
           node.new_node = false
-          node.process_attrs(node_attrs) if node_attrs.present?
         end
       end
 
@@ -87,8 +80,14 @@ module Keymaker
     module InstanceMethods
 
       def initialize(attrs = {})
+        self.attributes = attrs if attrs.present?
         self.new_node = true
-        process_attrs(attrs) if attrs.present?
+      end
+
+      def ==(comparison_object)
+        comparison_object.instance_of?(self.class) &&
+          neo4j_id.present? &&
+          comparison_object.neo4j_id == neo4j_id
       end
 
       def new_node?
@@ -99,45 +98,64 @@ module Keymaker
         self.class.neo_service
       end
 
-      def sanitize(attrs)
-        serializable_hash(except: :node_id).merge(attrs.except('node_id')).reject {|k,v| v.blank?}
-      end
-
       def save
         create_or_update
       end
 
       def create_or_update
         run_callbacks :save do
-          new_node? ? create : update(attributes)
+          new_node? ? create : update_attributes(attributes_for_updating)
         end
+      end
+
+      def sanitize(attrs)
+        set_attributes(attrs.except(:neo4j_id).reject {|k,v| v.blank?})
+      end
+
+      def attributes_for_creating
+        # TODO: figure out a way to make the timezone configureable
+        sanitize(attributes.merge({created_at: Time.now.utc, updated_at: Time.now.utc}))
+      end
+
+      def attributes_for_updating
+        attributes_for_creating.except(:created_at)
       end
 
       def create
         run_callbacks :create do
-          neo_service.create_node(sanitize(attributes)).on_success do |response|
-            self.node_id = response.neo4j_id
+          neo_service.create_node(attributes_for_creating).on_success do |response|
+            self.neo4j_id = response.neo4j_id
             self.new_node = false
           end
           self
         end
       end
 
-      def update(attrs)
-        process_attrs(sanitize(attrs.merge(updated_at: Time.now.utc.to_i)))
-        neo_service.update_node_properties(node_id, sanitize(attributes))
+      def update_attributes(attrs)
+        set_attributes(attrs)
+        neo_service.update_node_properties(neo4j_id, attributes_for_updating)
+      end
+
+      def set_attributes(attrs)
+        attrs.each do |key,value|
+          if respond_to?("#{key}=")
+            public_send("#{key}=", value)
+          else
+            raise Keymaker::UnknownAttributeError, "Undefined attribute #{key}"
+          end
+        end
       end
 
       def add_node_type_index
-        neo_service.add_node_to_index('nodes', 'node_type', self.class.model_name, node_id)
+        neo_service.add_node_to_index('nodes', 'node_type', self.class.model_name, neo4j_id)
       end
 
       def persisted?
-        node_id.present?
+        neo4j_id.present?
       end
 
       def to_key
-        persisted? ? [node_id] : nil
+        persisted? ? [neo4j_id] : nil
       end
 
     end

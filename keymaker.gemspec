@@ -25,11 +25,13 @@ Gem::Specification.new do |s|
   s.add_dependency 'hashie'
   s.add_dependency 'faraday'
   s.add_dependency 'faraday_middleware'
+  s.add_dependency 'virtus'
 
   s.add_development_dependency 'fakeweb'
+  s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'ruby-debug19'
+  s.add_development_dependency 'timecop'
   s.add_development_dependency 'vcr'
 
   ## Leave this section as-is. It will be automatically generated from the
