@@ -14,6 +14,8 @@ module Keymaker
       super(message)
     end
   end
+  class UserError < Error; end
+  class UnknownAttributeError < UserError; end
   class ClientError < HttpError; end
   class ConflictError < ClientError; end
   class ResourceNotFound < ClientError; end

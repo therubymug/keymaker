@@ -57,12 +57,12 @@ module Keymaker
       service_root.node
     end
 
-    def node_properties_path(node_id)
-      [node_path, node_id.to_s, 'properties'].join('/')
+    def node_properties_path(neo4j_id)
+      [node_path, neo4j_id.to_s, 'properties'].join('/')
     end
 
-    def node_uri(node_id)
-      [node_path, node_id.to_s].join("/")
+    def node_uri(neo4j_id)
+      [node_path, neo4j_id.to_s].join("/")
     end
 
     def batch_path
@@ -77,12 +77,12 @@ module Keymaker
       service_root.relationship_types
     end
 
-    def relationships_path_for_node(node_id)
-      [node_path, node_id.to_s, "relationships"].join("/")
+    def relationships_path_for_node(neo4j_id)
+      [node_path, neo4j_id.to_s, "relationships"].join("/")
     end
 
-    def node_full_index_path(index_name, key, value, node_id)
-      [node_index_path(index_name), key, value, node_id].join("/")
+    def node_full_index_path(index_name, key, value, neo4j_id)
+      [node_index_path(index_name), key, value, neo4j_id].join("/")
     end
 
     def node_index_path(index_name)
