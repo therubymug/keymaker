@@ -1,13 +1,12 @@
 language: ruby
 rvm:
-  - 1.9.2
-  - 1.9.3
+  - 2.1.6
+  - 2.2.3
 branches:
   only:
     - master
 env:
-  - NEO4J_VERSION=1.7.2
-  - NEO4J_VERSION=1.8
+  - NEO4J_VERSION=2.3.1
 before_script:
   - sh -c "rake neo4j:install[community,$NEO4J_VERSION]"
   - rake neo4j:start

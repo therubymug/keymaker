@@ -8,7 +8,7 @@ describe Keymaker::DeleteNodeRequest do
     let(:node_id) { Keymaker.service.create_node({name: "John Connor"}).neo4j_id }
     let(:opts) { {node_id: node_id} }
     it "deletes the node" do
-      delete_node_request.status.should == 204
+      expect(delete_node_request.status).to eq(204)
     end
   end
 

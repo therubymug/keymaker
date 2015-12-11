@@ -12,7 +12,7 @@ describe Keymaker::DeleteRelationshipRequest, vcr: true do
 
     let(:options) { {relationship_id: relationship_id} }
     it "deletes the relationship" do
-      delete_relationship_request.status.should == 204
+      expect(delete_relationship_request.status).to eq(204)
     end
   end
 

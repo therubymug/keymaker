@@ -11,7 +11,7 @@ describe Keymaker::Service  do
 
     describe "#connection" do
       it "includes the username and password" do
-        Faraday.should_receive(:new).with(url: config.connection_service_root_url)
+        expect(Faraday).to receive(:new).with(url: config.connection_service_root_url)
         service.connection
       end
     end

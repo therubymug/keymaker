@@ -83,7 +83,7 @@ def neo4j_host
 end
 
 def clear_graph
-  raw_connection.post("/db/data/ext/GremlinPlugin/graphdb/execute_script", {script: "g.clear()\;g.V()"})
+  Keymaker.service.execute_cypher( "MATCH (n) DETACH DELETE n", {})
 end
 
 def clear_users_index

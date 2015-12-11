@@ -12,7 +12,7 @@ describe Keymaker::Service do
     context "with an existing node" do
       context "with properties" do
         it "responds to the node's properties" do
-          get_node.should respond_to(:email)
+          expect(get_node).to respond_to(:email)
         end
       end
     end

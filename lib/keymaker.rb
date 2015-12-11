@@ -10,7 +10,7 @@ require 'active_support/core_ext/class/attribute'
 require 'active_support/core_ext/string/conversions'
 require 'active_support/hash_with_indifferent_access'
 
-require 'keymaker/match_method'
+require 'keymaker/match_method_macros'
 require 'keymaker/errors'
 require 'keymaker/response'
 require 'keymaker/parsers/cypher_response_parser'

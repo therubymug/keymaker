@@ -29,8 +29,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'fakeweb'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'ruby-debug19'
+  s.add_development_dependency 'rspec-its'
+  s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'vcr'
+  s.add_development_dependency 'pry'
 
   ## Leave this section as-is. It will be automatically generated from the
   ## contents of your Git repository via the gemspec task. DO NOT REMOVE
@@ -46,7 +48,7 @@ Gem::Specification.new do |s|
     lib/keymaker/configuration.rb
     lib/keymaker/errors.rb
     lib/keymaker/indexing.rb
-    lib/keymaker/match_method.rb
+    lib/keymaker/match_method_macros.rb
     lib/keymaker/node.rb
     lib/keymaker/parsers/cypher_response_parser.rb
     lib/keymaker/rails_tasks.rb

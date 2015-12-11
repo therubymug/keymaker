@@ -7,7 +7,7 @@ describe Keymaker::ExecuteCypherRequest, vcr: true do
   context "with a valid Cypher Query" do
     let(:opts) { {query: "START a = node(*) return a"} }
     it "returns a 200 status code" do
-      execute_cypher_request.status.should == 200
+      expect(execute_cypher_request.status).to eq(200)
     end
   end
 

@@ -54,7 +54,7 @@ describe Keymaker::BatchRequest, :vcr => true do
     end
 
     it "returns a 200 status code" do
-      batch_request.status.should == 200
+      expect(batch_request.status).to eq(200)
     end
 
   end

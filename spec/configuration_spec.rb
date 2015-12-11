@@ -10,7 +10,7 @@ describe Keymaker::Configuration do
 
     describe "#node_uri" do
       it "should not contain credentials" do
-        config.node_uri(42).should_not include("jconnor:easymoney@")
+        expect(config.node_uri(42)).to_not include("jconnor:easymoney@")
       end
     end
   end

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Keymaker::GetNodeRequest, vcr: true do
+describe Keymaker::GetNodeRequest do
   let(:get_node_request) { Keymaker::GetNodeRequest.new(Keymaker.service, opts).submit }
 
   context "with a non-existent node id" do
-    let(:opts) {{node_id: 42}}
+    let(:opts) {{node_id: 9999999942}}
     it "raises ResourceNotFound" do
       expect {
         get_node_request

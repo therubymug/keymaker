@@ -2,7 +2,7 @@ require 'spec_helper'
 require "addressable/uri"
 require 'keymaker'
 
-describe Keymaker do
+RSpec.describe Keymaker do
 
   include_context "John and Sarah nodes"
 
@@ -16,7 +16,7 @@ describe Keymaker do
       let(:node_id) { john_node_id }
 
       it "returns the node" do
-        do_it.email.should == john_email
+        expect(do_it.email).to eq(john_email)
       end
     end
 
@@ -24,7 +24,7 @@ describe Keymaker do
       let(:node_id) { nil }
 
       it "raises an error" do
-        expect { do_it }.to raise_error
+        expect { do_it }.to raise_error(Keymaker::ClientError)
       end
     end
 
@@ -47,7 +47,7 @@ describe Keymaker do
       end
 
       it "raises an error" do
-        expect { do_it }.to raise_error
+        expect { do_it }.to raise_error(Faraday::ConnectionFailed)
       end
 
     end
@@ -87,11 +87,11 @@ describe Keymaker do
 
         it "adds the node to the index" do
           do_it
-          index_result.should == john_node_url
+          expect(index_result).to eq(john_node_url)
         end
 
         it "returns a status of 201" do
-          do_it.status.should == 201
+          expect(do_it.status).to eq(201)
         end
 
       end
@@ -122,16 +122,16 @@ describe Keymaker do
 
         it "removes the node from the index" do
           do_it
-          connection.get(index_query_for_john_url).body.should be_empty
+          expect(connection.get(index_query_for_john_url).body).to be_empty
         end
 
         it "returns a status of 204" do
-          do_it.status.should == 204
+          expect(do_it.status).to eq(204)
         end
 
         it "keeps the other node indices" do
           do_it
-          connection.get(index_query_for_sarah_url).body.should_not be_empty
+          expect(connection.get(index_query_for_sarah_url).body).to_not be_empty
         end
 
       end
@@ -142,7 +142,7 @@ describe Keymaker do
         let(:node_id) { -22 }
 
         it "returns a 404 status" do
-          do_it.status.should == 404
+          expect(do_it.status).to eq(404)
         end
 
       end
@@ -160,7 +160,7 @@ describe Keymaker do
       let(:cypher_string) { "START n=node(*) RETURN n.email AS email" }
 
       it "performs the cypher query and responds" do
-        do_it.first.email.should == john_email
+        expect(do_it.first.email).to eq(john_email)
       end
     end
 
@@ -168,7 +168,7 @@ describe Keymaker do
       let(:cypher_string) { "START n=node(*) RETURN n.email" }
 
       it "performs the cypher query and responds" do
-        do_it.first.email.should == john_email
+        expect(do_it.first.email).to eq(john_email)
       end
     end
 
@@ -176,7 +176,7 @@ describe Keymaker do
       let(:cypher_string) { "START n=node(*) RETURN n" }
 
       it "performs the cypher query and responds" do
-        do_it.first.email.should == john_email
+        expect(do_it.first.email).to eq(john_email)
       end
     end
 
@@ -196,7 +196,7 @@ describe Keymaker do
       end
 
       it "creates a node with properties" do
-        do_it.should == {"first_name"=>"john", "email"=>"john@resistance.net", "last_name"=>"connor"}
+        expect(do_it).to eq({"first_name"=>"john", "email"=>"john@resistance.net", "last_name"=>"connor"})
       end
 
     end
@@ -215,8 +215,8 @@ describe Keymaker do
       end
 
       it "creates the relationship between the two nodes" do
-        do_it["start"].should == john_node_url
-        do_it["end"].should == sarah_node_url
+        expect(do_it["start"]).to eq(john_node_url)
+        expect(do_it["end"]).to eq(sarah_node_url)
       end
 
     end
@@ -233,7 +233,7 @@ describe Keymaker do
       end
 
       it "deletes the relationship" do
-        do_it.should == []
+        expect(do_it).to eq([])
       end
 
     end

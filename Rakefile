@@ -41,7 +41,7 @@ require 'rspec/core/rake_task'
 desc "Run all specs"
 task RSpec::Core::RakeTask.new('spec')
 
-task :default => "spec"
+task default: "spec"
 
 desc "Open an irb session preloaded with this library"
 task :console do
@@ -62,7 +62,7 @@ end
 #############################################################################
 
 desc "Create tag v#{version} and build and push #{gem_file} to Rubygems"
-task :release => :build do
+task release: :build do
   unless `git branch` =~ /^\* master$/
     puts "You must be on the master branch to release!"
     exit!
@@ -75,14 +75,14 @@ task :release => :build do
 end
 
 desc "Build #{gem_file} into the pkg directory"
-task :build => :gemspec do
+task build: :gemspec do
   sh "mkdir -p pkg"
   sh "gem build #{gemspec_file}"
   sh "mv #{gem_file} pkg"
 end
 
 desc "Generate #{gemspec_file}"
-task :gemspec => :validate do
+task gemspec: :validate do
   # read spec file and split out manifest section
   spec = File.read(gemspec_file)
   head, manifest, tail = spec.split("  # = MANIFEST =\n")
@@ -131,12 +131,13 @@ KEYMAKER_ROOT = File.expand_path(File.dirname(__FILE__))
 KEYMAKER_TMP_DIR = File.expand_path(File.join(KEYMAKER_ROOT, "tmp"))
 NEO4J_INSTALL_DIR = ENV['NEO4J_INSTALL_DIR'] || File.expand_path(File.join(KEYMAKER_TMP_DIR, "keymaker_development"))
 NEO4J_PORT = ENV['NEO4J_PORT'] || '7477' # Don't clobber standard neo4j ports 7474 or 7475 for development
+NEO4J_MIRROR = ENV['NEO4J_MIRROR'] || "http://dist.neo4j.org"
 
 namespace :neo4j do
 
   desc "Install neo4j on localhost:#{NEO4J_PORT}. e.g. rake neo4j:install[community,1.9-SNAPSHOT]"
   task :install, :edition, :version do |t, args|
-    args.with_defaults(:edition => "community", :version => "1.8")
+    args.with_defaults(edition: "community", version: "2.3.1")
 
     source_name = "neo4j-#{args[:edition]}-#{args[:version]}"
     tarball = "#{source_name}-unix.tar.gz"
@@ -148,7 +149,7 @@ namespace :neo4j do
 
     %x[mkdir -p #{KEYMAKER_TMP_DIR}; cd #{KEYMAKER_TMP_DIR}]
     FileUtils.rm_rf(NEO4J_INSTALL_DIR) if Dir.exists?(NEO4J_INSTALL_DIR) && File.owned?(NEO4J_INSTALL_DIR)
-    %x[wget http://dist.neo4j.org/#{tarball}]
+    %x[wget #{NEO4J_MIRROR}/#{tarball}]
     %x[tar xvzf #{tarball}]
 
     %x[mv #{source_name} #{NEO4J_INSTALL_DIR}]
@@ -156,9 +157,10 @@ namespace :neo4j do
 
     %x[sed -i.bak 's/7474/#{NEO4J_PORT}/g' #{NEO4J_INSTALL_DIR}/conf/neo4j-server.properties]
     %x[sed -i.bak 's/#{ssl_url_true}/#{ssl_url_false}/g' #{NEO4J_INSTALL_DIR}/conf/neo4j-server.properties]
+    %x[sed -i.bak 's/dbms.security.auth_enabled=true/dbms.security.auth_enabled=false/g' #{NEO4J_INSTALL_DIR}/conf/neo4j-server.properties]
 
     puts "#{source_name} Installed into the #{NEO4J_INSTALL_DIR} directory."
-    puts "Run `rake neo4j:start` to start it"
+    puts "Run `bundle exec rake neo4j:start` to start it"
   end
 
   desc "Start the neo4j server running on localhost:#{NEO4J_PORT}"

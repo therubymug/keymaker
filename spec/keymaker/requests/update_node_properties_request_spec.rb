@@ -11,7 +11,7 @@ describe Keymaker::UpdateNodePropertiesRequest, vcr: true do
       {node_id: john_node_id, email: "john.connor@resistance.net"}
     end
     it "excludes the node_id" do
-      update_node_properties_request.node_properties.should_not include({node_id: john_node_id})
+      expect(update_node_properties_request.node_properties).to_not include({node_id: john_node_id})
     end
   end
 
@@ -28,12 +28,12 @@ describe Keymaker::UpdateNodePropertiesRequest, vcr: true do
     let(:john_node_email) { john_node_cypher_request.body["data"][0][0] }
 
     it "returns a status of 204" do
-      do_it.status.should == 204
+      expect(do_it.status).to eq(204)
     end
 
     it "updates the properties" do
       do_it
-      john_node_email.should == "john.connor@resistance.net"
+      expect(john_node_email).to eq("john.connor@resistance.net")
     end
 
   end

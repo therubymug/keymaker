@@ -9,7 +9,6 @@ module Keymaker
       base.class_eval do
         extend ActiveModel::Callbacks
         extend ActiveModel::Naming
-        include ActiveModel::MassAssignmentSecurity
         include ActiveModel::Validations
         include ActiveModel::Conversion
 
@@ -20,7 +19,6 @@ module Keymaker
         include Keymaker::Node::InstanceMethods
 
         attr_accessor :new_node
-        attr_protected :created_at, :updated_at
       end
 
       base.after_save :update_indices

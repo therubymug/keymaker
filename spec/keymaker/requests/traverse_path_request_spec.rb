@@ -14,7 +14,7 @@ describe Keymaker::TraversePathRequest, vcr: true do
     context "with options" do
       let(:options) { {order: "depth_first", relationships: "out"} }
       it "builds the query properties with defaults" do
-        traverse_path_request.traverse_path_properties.should include(
+        expect(traverse_path_request.traverse_path_properties).to include(
           order: "depth_first",
           relationships: "out",
           uniqueness: "relationship_global"
@@ -36,7 +36,7 @@ describe Keymaker::TraversePathRequest, vcr: true do
         uniqueness: "relationship_global" }
     end
     it "returns status code 200" do
-      do_it.status.should == 200
+      expect(do_it.status).to eq(200)
     end
   end
 

@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'keymaker'
 
-describe Keymaker::ServiceRootRequest, vcr: true do
+describe Keymaker::ServiceRootRequest do
 
   let(:service_root_request) { Keymaker::ServiceRootRequest.new(Keymaker.service, {}).submit }
 
   it "returns the Neo4j REST API starting point response request" do
-    service_root_request.body.should include(
+    expect(service_root_request.body).to include(
       {
         "cypher"             => "#{neo4j_host}/db/data/cypher",
         "relationship_index" => "#{neo4j_host}/db/data/index/relationship",
@@ -15,21 +15,17 @@ describe Keymaker::ServiceRootRequest, vcr: true do
         "batch"              => "#{neo4j_host}/db/data/batch",
         "extensions_info"    => "#{neo4j_host}/db/data/ext",
         "node_index"         => "#{neo4j_host}/db/data/index/node",
-        "extensions"         =>
-        {
-          "CypherPlugin"   => {"execute_query"  => "#{neo4j_host}/db/data/ext/CypherPlugin/graphdb/execute_query"},
-          "GremlinPlugin"  => {"execute_script" => "#{neo4j_host}/db/data/ext/GremlinPlugin/graphdb/execute_script"}
-        }
+        "extensions"         => {}
       }
     )
   end
 
   it "returns a 200 status code" do
-    service_root_request.status.should == 200
+    expect(service_root_request.status).to eq(200)
   end
 
   it "returns application/json" do
-    service_root_request.faraday_response.headers["content-type"].should include("application/json")
+    expect(service_root_request.faraday_response.headers["content-type"]).to include("application/json")
   end
 
 end

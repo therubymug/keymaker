@@ -10,7 +10,7 @@ describe Keymaker::AddNodeToIndexRequest, vcr: true do
     let(:add_node_to_index_request) { Keymaker::AddNodeToIndexRequest.new(Keymaker.service, options).submit }
 
     it "returns the Neo4j REST API starting point response request" do
-      add_node_to_index_request.body.should include(
+      expect(add_node_to_index_request.body).to include(
         {
           "indexed"                      => "#{neo4j_host}/db/data/index/node/users/email/john%40resistance.net/#{john_node_id}",
           "outgoing_relationships"       => "#{neo4j_host}/db/data/node/#{john_node_id}/relationships/out",
@@ -32,11 +32,11 @@ describe Keymaker::AddNodeToIndexRequest, vcr: true do
     end
 
     it "returns a 201 status code" do
-      add_node_to_index_request.status.should == 201
+      expect(add_node_to_index_request.status).to eq(201)
     end
 
     it "returns application/json" do
-      add_node_to_index_request.faraday_response.headers["content-type"].should include("application/json")
+      expect(add_node_to_index_request.faraday_response.headers["content-type"]).to include("application/json")
     end
   end
 

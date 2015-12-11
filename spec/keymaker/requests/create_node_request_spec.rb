@@ -13,7 +13,7 @@ describe Keymaker::CreateNodeRequest, vcr: true do
   context "with properties" do
     let(:options) {{name: "John Connor"}}
     it "creates a node with the given properties" do
-      body.should include({
+      expect(body).to include({
         "self" => "#{neo4j_host}/db/data/node/#{node_id}",
         "data" => {"name"=>"John Connor"}
       })
@@ -22,7 +22,7 @@ describe Keymaker::CreateNodeRequest, vcr: true do
 
   context "without properties" do
     it "creates an empty node" do
-      body.should include({
+      expect(body).to include({
         "self" => "#{neo4j_host}/db/data/node/#{node_id}",
         "data"=>{}
       })
@@ -30,11 +30,11 @@ describe Keymaker::CreateNodeRequest, vcr: true do
   end
 
   it "returns a 201 status code" do
-    status.should == 201
+    expect(status).to eq(201)
   end
 
   it "returns application/json" do
-    faraday_response.headers["content-type"].should include("application/json")
+    expect(faraday_response.headers["content-type"]).to include("application/json")
   end
 
 end
