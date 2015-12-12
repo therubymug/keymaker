@@ -187,11 +187,13 @@ namespace :neo4j do
     # Stop the server
     %x[#{NEO4J_INSTALL_DIR}/bin/neo4j stop]
     # Reset the database
-    FileUtils.rm_rf("#{NEO4J_INSTALL_DIR}/data/graph.db")
-    FileUtils.mkdir("#{NEO4J_INSTALL_DIR}/data/graph.db")
+    graph_db_path = File.expand_path(File.join(NEO4J_INSTALL_DIR, "data", "graph.db"))
+    log_path = File.expand_path(File.join(NEO4J_INSTALL_DIR, "data", "log"))
+    FileUtils.rm_rf(graph_db_path)
+    FileUtils.mkdir(graph_db_path)
     # Remove log files
-    FileUtils.rm_rf("#{NEO4J_INSTALL_DIR}/data/log")
-    FileUtils.mkdir("#{NEO4J_INSTALL_DIR}/data/log")
+    FileUtils.rm_rf(log_path)
+    FileUtils.mkdir(log_path)
     # Start the server
     %x[#{NEO4J_INSTALL_DIR}/bin/neo4j start]
   end

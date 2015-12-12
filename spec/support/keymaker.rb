@@ -83,7 +83,7 @@ def neo4j_host
 end
 
 def clear_graph
-  Keymaker.service.execute_cypher( "MATCH (n) DETACH DELETE n", {})
+  Keymaker.service.execute_cypher("MATCH (n) DETACH DELETE n", {})
 end
 
 def clear_users_index

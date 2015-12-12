@@ -20,6 +20,7 @@ module Keymaker
     end
 
     def neo4j_id
+      require 'pry'; binding.pry
       body["self"] && body["self"][/\d+$/].to_i
     end
 

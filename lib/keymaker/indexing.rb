@@ -12,11 +12,11 @@ module Keymaker
         indices_traits[index_name] = indices_traits.fetch(index_name, [])
       end
 
-      # index :threds, on: :name, with: :sanitized_name
+      # index :users, on: :name, with: :sanitized_name
       # data structure:
-      # { threds: [{ :index_key => :name, :value => :sanitized_name }], users: [{ :index_key => :email, :value => :email }, { :index_key => :username, :value => :username }] }
+      # { users: [{ index_key: :name, value: :sanitized_name }], users: [{ index_key: :email, value: :email }, { index_key: :username, value: :username }] }
       def index(index_name,options)
-        index_row(index_name.to_s) << { :index_key => options[:on].to_s, :value => options.fetch(:with, options[:on]) }
+        index_row(index_name.to_s) << { index_key: options[:on].to_s, value: options.fetch(:with, options[:on]) }
       end
     end
 
