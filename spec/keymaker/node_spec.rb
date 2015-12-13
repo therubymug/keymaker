@@ -3,6 +3,7 @@ require 'spec_helper'
 class Terminator
   include Keymaker::Node
   property :name
+  index on: :name
 end
 
 RSpec.describe Keymaker::Node do
@@ -17,15 +18,6 @@ RSpec.describe Keymaker::Node do
     its(:name) { should eq('T1000') }
     it { is_expected.to_not be_new_node }
     it { is_expected.to be_a(Terminator) }
-  end
-
-  context "callbacks" do
-    context ":after_create" do
-      it "adds the node type to the 'nodes' index'" do
-        expect(Terminator.neo_service).to receive(:add_node_to_index).with('nodes', 'node_type', 'Terminator', kind_of(Integer))
-        Terminator.create(name: 'T1000')
-      end
-    end
   end
 
   describe ".find_all_by_cypher(query, params)" do

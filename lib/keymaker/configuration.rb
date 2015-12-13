@@ -81,6 +81,10 @@ module Keymaker
       [node_path, node_id.to_s, "relationships"].join("/")
     end
 
+    def labels_path_for_node(node_id)
+      [node_path, node_id.to_s, "labels"].join("/")
+    end
+
     def node_full_index_path(index_name, key, value, node_id)
       [node_index_path(index_name), key, value, node_id].join("/")
     end

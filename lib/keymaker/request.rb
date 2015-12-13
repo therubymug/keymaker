@@ -7,6 +7,7 @@ module Keymaker
     def_delegator :config, :data_directory_path
     def_delegator :config, :full_cypher_path
     def_delegator :config, :full_gremlin_path
+    def_delegator :config, :labels_path_for_node
     def_delegator :config, :node_full_index_path
     def_delegator :config, :node_index_path
     def_delegator :config, :node_path

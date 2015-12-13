@@ -21,16 +21,11 @@ module Keymaker
         attr_accessor :new_node
       end
 
-      base.after_save :update_indices
-      base.after_create :add_node_type_index
+      base.after_create :add_node_label
 
       base.class_attribute :property_traits
-      base.class_attribute :indices_traits
-
       base.property_traits = {}
-      base.indices_traits = {}
 
-      base.property :active_record_id, Integer
       base.property :node_id, Integer
       base.property :created_at, DateTime
       base.property :updated_at, DateTime
@@ -126,8 +121,8 @@ module Keymaker
         neo_service.update_node_properties(node_id, sanitize(attributes))
       end
 
-      def add_node_type_index
-        neo_service.add_node_to_index('nodes', 'node_type', self.class.model_name, node_id)
+      def add_node_label
+        neo_service.add_node_labels(node_id, self.class.model_name.human)
       end
 
       def persisted?

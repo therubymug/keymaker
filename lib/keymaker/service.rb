@@ -67,6 +67,10 @@ module Keymaker
       add_node_to_index_request(index_name: index_name, key: key, value: value, node_id: node_id)
     end
 
+    def add_node_labels(node_id, labels)
+      add_node_labels_request(node_id: node_id, labels: Array(labels))
+    end
+
     def remove_node_from_index(index_name, key, value, node_id)
       remove_node_from_index_request(index_name: index_name, key: key, value: value, node_id: node_id)
     end
