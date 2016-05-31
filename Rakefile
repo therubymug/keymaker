@@ -155,9 +155,9 @@ namespace :neo4j do
     %x[mv #{source_name} #{NEO4J_INSTALL_DIR}]
     %x[rm #{tarball}]
 
-    %x[sed -i.bak 's/7474/#{NEO4J_PORT}/g' #{NEO4J_INSTALL_DIR}/conf/neo4j-server.properties]
-    %x[sed -i.bak 's/#{ssl_url_true}/#{ssl_url_false}/g' #{NEO4J_INSTALL_DIR}/conf/neo4j-server.properties]
-    %x[sed -i.bak 's/dbms.security.auth_enabled=true/dbms.security.auth_enabled=false/g' #{NEO4J_INSTALL_DIR}/conf/neo4j-server.properties]
+    %x[sed -i.bak 's/7474/#{NEO4J_PORT}/g' #{NEO4J_INSTALL_DIR}/conf/neo4j.conf]
+    %x[sed -i.bak 's/#{ssl_url_true}/#{ssl_url_false}/g' #{NEO4J_INSTALL_DIR}/conf/neo4j.conf]
+    %x[sed -i.bak 's/dbms.security.auth_enabled=true/dbms.security.auth_enabled=false/g' #{NEO4J_INSTALL_DIR}/conf/neo4j.conf]
 
     puts "#{source_name} Installed into the #{NEO4J_INSTALL_DIR} directory."
     puts "Run `bundle exec rake neo4j:start` to start it"
